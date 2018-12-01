@@ -26,8 +26,8 @@ namespace Vostok.Commons.Binary
         void Write(double value);
         void Write(Guid value);
 
-        void WriteVarlen(uint value);
-        void WriteVarlen(ulong value);
+        int WriteVarlen(uint value);
+        int WriteVarlen(ulong value);
 
         void WriteWithLength([NotNull] string value, [NotNull] Encoding encoding);
         void WriteWithoutLength([NotNull] string value, [NotNull] Encoding encoding);

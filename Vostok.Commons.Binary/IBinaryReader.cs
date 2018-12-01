@@ -29,10 +29,10 @@ namespace Vostok.Commons.Binary
         uint ReadVarlenUInt32();
         ulong ReadVarlenUInt64();
 
-        string ReadString(Encoding encoding);
-        string ReadString(Encoding encoding, int length);
+        [NotNull] string ReadString(Encoding encoding);
+        [NotNull] string ReadString(Encoding encoding, int length);
 
-        byte[] ReadByteArray();
-        byte[] ReadByteArray(int size);
+        [NotNull] byte[] ReadByteArray();
+        [NotNull] byte[] ReadByteArray(int size);
     }
 }

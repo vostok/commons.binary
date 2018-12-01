@@ -29,12 +29,12 @@ namespace Vostok.Commons.Binary
         void WriteVarlen(uint value);
         void WriteVarlen(ulong value);
 
-        void WriteWithLength(string value, Encoding encoding);
-        void WriteWithoutLength(string value, Encoding encoding);
+        void WriteWithLength([NotNull] string value, [NotNull] Encoding encoding);
+        void WriteWithoutLength([NotNull] string value, [NotNull] Encoding encoding);
 
-        void WriteWithLength(byte[] value);
-        void WriteWithLength(byte[] value, int offset, int length);
-        void WriteWithoutLength(byte[] value);
-        void WriteWithoutLength(byte[] value, int offset, int length);
+        void WriteWithLength([NotNull] byte[] value);
+        void WriteWithLength([NotNull] byte[] value, int offset, int length);
+        void WriteWithoutLength([NotNull] byte[] value);
+        void WriteWithoutLength([NotNull] byte[] value, int offset, int length);
     }
 }

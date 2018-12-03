@@ -5,6 +5,12 @@ using JetBrains.Annotations;
 
 namespace Vostok.Commons.Binary
 {
+    /// <summary>
+    /// <para>An implementation of <see cref="IBinaryWriter"/> based on an in-memory byte array.</para>
+    /// <para>Can dynamically resize during writing to accomodate more data (uses 2x growth by default).</para>
+    /// <para>Supports changing <see cref="Position"/> and <see cref="Endianness"/> on the fly.</para>
+    /// <para>Not thread-safe.</para>
+    /// </summary>
     [PublicAPI]
     internal class BinaryBufferWriter : IBinaryWriter
     {

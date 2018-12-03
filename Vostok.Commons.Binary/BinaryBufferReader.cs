@@ -5,6 +5,11 @@ using JetBrains.Annotations;
 
 namespace Vostok.Commons.Binary
 {
+    /// <summary>
+    /// <para>An implementation of <see cref="IBinaryReader"/> based on an in-memory byte array.</para>
+    /// <para>Supports changing <see cref="Position"/> and <see cref="Endianness"/> on the fly.</para>
+    /// <para>Not thread-safe.</para>
+    /// </summary>
     [PublicAPI]
     internal class BinaryBufferReader : IBinaryReader
     {

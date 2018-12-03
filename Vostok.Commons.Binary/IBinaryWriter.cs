@@ -30,7 +30,7 @@ namespace Vostok.Commons.Binary
         void Write(bool value);
 
         /// <summary>
-        /// <para>Writes given numerical value in its binary form.</para>
+        /// <para>Writes given numerical value in its binary representation.</para>
         /// <para>Binary output of this method is affected by currently selected <see cref="Endianness"/>.</para>
         /// </summary>
         void Write(short value);

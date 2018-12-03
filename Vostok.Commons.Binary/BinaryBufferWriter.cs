@@ -48,6 +48,7 @@ namespace Vostok.Commons.Binary
 
         public ArraySegment<byte> FilledSegment => new ArraySegment<byte>(Buffer, 0, Length);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write(byte value)
         {
             EnsureCapacity(1);
@@ -57,11 +58,13 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write(bool value)
         {
             Write(value ? (byte) 1 : (byte) 0);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe void Write(short value)
         {
             const int ValueSize = sizeof(short);
@@ -78,6 +81,7 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe void Write(int value)
         {
             const int ValueSize = sizeof(int);
@@ -94,6 +98,7 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe void Write(long value)
         {
             const int ValueSize = sizeof(long);
@@ -110,6 +115,7 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe void Write(ushort value)
         {
             const int ValueSize = sizeof(ushort);
@@ -126,6 +132,7 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe void Write(uint value)
         {
             const int ValueSize = sizeof(uint);
@@ -142,6 +149,7 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe void Write(ulong value)
         {
             const int ValueSize = sizeof(ulong);
@@ -158,6 +166,7 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe void Write(float value)
         {
             const int ValueSize = sizeof(float);
@@ -174,6 +183,7 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe void Write(double value)
         {
             const int ValueSize = sizeof(double);
@@ -190,6 +200,7 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe void Write(Guid value)
         {
             const int ValueSize = 16;
@@ -204,6 +215,7 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int WriteVarlen(uint value)
         {
             EnsureCapacity(sizeof(uint) + 1);
@@ -234,6 +246,7 @@ namespace Vostok.Commons.Binary
             return bytesWritten;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int WriteVarlen(ulong value)
         {
             EnsureCapacity(sizeof(ulong) + 1);
@@ -264,6 +277,7 @@ namespace Vostok.Commons.Binary
             return bytesWritten;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void WriteWithLength(string value, Encoding encoding)
         {
             EnsureCapacity(encoding.GetMaxByteCount(value.Length) + sizeof(int));
@@ -277,6 +291,7 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void WriteWithoutLength(string value, Encoding encoding)
         {
             EnsureCapacity(encoding.GetMaxByteCount(value.Length));
@@ -286,11 +301,13 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void WriteWithLength(byte[] value)
         {
             WriteWithLength(value, 0, value.Length);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void WriteWithLength(byte[] value, int offset, int length)
         {
             EnsureCapacity(length + sizeof(int));
@@ -304,11 +321,13 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void WriteWithoutLength(byte[] value)
         {
             WriteWithoutLength(value, 0, value.Length);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void WriteWithoutLength(byte[] value, int offset, int length)
         {
             EnsureCapacity(length);

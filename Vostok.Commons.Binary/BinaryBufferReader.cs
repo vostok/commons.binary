@@ -250,12 +250,8 @@ namespace Vostok.Commons.Binary
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ReadString(Encoding encoding)
         {
-            return ReadString(encoding, ReadInt32());
-        }
+            var size = ReadInt32();
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public string ReadString(Encoding encoding, int size)
-        {
             EnsureSufficientSizeRemaining(size);
 
             var result = encoding.GetString(Buffer, (int) Position, size);

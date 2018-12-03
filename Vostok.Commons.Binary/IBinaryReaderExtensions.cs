@@ -16,12 +16,6 @@ namespace Vostok.Commons.Binary
             return reader.ReadString(Encoding.UTF8);
         }
 
-        [NotNull]
-        public static string ReadString([NotNull] this IBinaryReader reader, int length)
-        {
-            return reader.ReadString(Encoding.UTF8, length);
-        }
-
         #endregion
 
         #region Derived primitive types

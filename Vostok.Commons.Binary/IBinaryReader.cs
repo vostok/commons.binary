@@ -76,8 +76,6 @@ namespace Vostok.Commons.Binary
         /// </summary>
         [NotNull] string ReadString(Encoding encoding);
 
-        [NotNull] string ReadString(Encoding encoding, int size);
-
         /// <summary>
         /// <para>Reads a byte array.</para>
         /// <para>Assumes that the value itself is prepended by its Int32 length.</para>

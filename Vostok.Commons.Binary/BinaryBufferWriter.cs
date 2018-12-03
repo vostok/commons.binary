@@ -68,14 +68,14 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(short);
 
+            value = EndiannessConverter.Convert(value, Endianness);
+
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
                 *(short*) ptr = value;
 
             position += ValueSize;
-
-            FlipEndiannessIfNeeded(ValueSize);
 
             IncreaseLengthIfNeeded();
         }
@@ -84,14 +84,14 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(int);
 
+            value = EndiannessConverter.Convert(value, Endianness);
+
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
                 *(int*) ptr = value;
 
             position += ValueSize;
-
-            FlipEndiannessIfNeeded(ValueSize);
 
             IncreaseLengthIfNeeded();
         }
@@ -100,14 +100,14 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(long);
 
+            value = EndiannessConverter.Convert(value, Endianness);
+
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
                 *(long*) ptr = value;
 
             position += ValueSize;
-
-            FlipEndiannessIfNeeded(ValueSize);
 
             IncreaseLengthIfNeeded();
         }
@@ -116,14 +116,14 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(ushort);
 
+            value = EndiannessConverter.Convert(value, Endianness);
+
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
                 *(ushort*) ptr = value;
 
             position += ValueSize;
-
-            FlipEndiannessIfNeeded(ValueSize);
 
             IncreaseLengthIfNeeded();
         }
@@ -132,14 +132,14 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(uint);
 
+            value = EndiannessConverter.Convert(value, Endianness);
+
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
                 *(uint*) ptr = value;
 
             position += ValueSize;
-
-            FlipEndiannessIfNeeded(ValueSize);
 
             IncreaseLengthIfNeeded();
         }
@@ -148,14 +148,14 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(ulong);
 
+            value = EndiannessConverter.Convert(value, Endianness);
+
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
                 *(ulong*) ptr = value;
 
             position += ValueSize;
-
-            FlipEndiannessIfNeeded(ValueSize);
 
             IncreaseLengthIfNeeded();
         }
@@ -164,14 +164,14 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(float);
 
+            value = EndiannessConverter.Convert(value, Endianness);
+
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
                 *(float*) ptr = value;
 
             position += ValueSize;
-
-            FlipEndiannessIfNeeded(ValueSize);
 
             IncreaseLengthIfNeeded();
         }
@@ -180,14 +180,14 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(double);
 
+            value = EndiannessConverter.Convert(value, Endianness);
+
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
                 *(double*) ptr = value;
 
             position += ValueSize;
-
-            FlipEndiannessIfNeeded(ValueSize);
 
             IncreaseLengthIfNeeded();
         }
@@ -231,8 +231,6 @@ namespace Vostok.Commons.Binary
 
             position += bytesWritten;
 
-            FlipEndiannessIfNeeded(bytesWritten);
-
             IncreaseLengthIfNeeded();
 
             return bytesWritten;
@@ -262,8 +260,6 @@ namespace Vostok.Commons.Binary
             } while (value > 0);
 
             position += bytesWritten;
-
-            FlipEndiannessIfNeeded(bytesWritten);
 
             IncreaseLengthIfNeeded();
 
@@ -348,15 +344,6 @@ namespace Vostok.Commons.Binary
             System.Buffer.BlockCopy(Buffer, 0, newBuffer, 0, Length);
 
             Buffer = newBuffer;
-        }
-
-        [MethodImpl]
-        private void FlipEndiannessIfNeeded(int size)
-        {
-            if (Endianness == SystemEndianness)
-                return;
-
-            Array.Reverse(Buffer, position - size, size);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

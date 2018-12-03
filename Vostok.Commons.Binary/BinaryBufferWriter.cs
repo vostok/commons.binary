@@ -345,6 +345,7 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset(int neededCapacity = 0)
         {
             if (Buffer == null || Buffer.Length < neededCapacity)

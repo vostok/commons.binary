@@ -7,7 +7,7 @@ namespace Vostok.Commons.Binary
     [PublicAPI]
     internal class EndiannessConverter
     {
-        private static readonly Endianness SystemEndianness = BitConverter.IsLittleEndian ? Endianness.Little : Endianness.Big;
+        public static readonly Endianness SystemEndianness = BitConverter.IsLittleEndian ? Endianness.Little : Endianness.Big;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static short Convert(short value, Endianness to)

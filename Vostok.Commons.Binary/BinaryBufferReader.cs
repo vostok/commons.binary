@@ -8,10 +8,16 @@ namespace Vostok.Commons.Binary
     [PublicAPI]
     internal class BinaryBufferReader : IBinaryReader
     {
-        public BinaryBufferReader([NotNull] byte[] buffer, long position)
+        public BinaryBufferReader([NotNull] byte[] buffer, int position)
         {
             Buffer = buffer ?? throw new ArgumentNullException(nameof(buffer));
             Position = position;
+
+            if (buffer.LongLength > int.MaxValue)
+                throw new ArgumentException($"Buffer was too large (it's length is {buffer.LongLength}).");
+
+            if (position > buffer.Length)
+                throw new ArgumentOutOfRangeException(nameof(position), $"Starting position {position} was outside of buffer (it's length is {buffer.Length}).");
         }
 
         private static readonly Endianness SystemEndianness = BitConverter.IsLittleEndian ? Endianness.Little : Endianness.Big;
@@ -32,7 +38,7 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(short);
 
-            CheckBounds(ValueSize);
+            EnsureSufficientSizeRemaining(ValueSize);
 
             short result;
 
@@ -48,7 +54,7 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(int);
 
-            CheckBounds(ValueSize);
+            EnsureSufficientSizeRemaining(ValueSize);
 
             int result;
 
@@ -64,7 +70,7 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(long);
 
-            CheckBounds(ValueSize);
+            EnsureSufficientSizeRemaining(ValueSize);
 
             long result;
 
@@ -80,7 +86,7 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(ushort);
 
-            CheckBounds(ValueSize);
+            EnsureSufficientSizeRemaining(ValueSize);
 
             ushort result;
 
@@ -96,7 +102,7 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(uint);
 
-            CheckBounds(ValueSize);
+            EnsureSufficientSizeRemaining(ValueSize);
 
             uint result;
 
@@ -112,7 +118,7 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(ulong);
 
-            CheckBounds(ValueSize);
+            EnsureSufficientSizeRemaining(ValueSize);
 
             ulong result;
 
@@ -128,7 +134,7 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(float);
 
-            CheckBounds(ValueSize);
+            EnsureSufficientSizeRemaining(ValueSize);
 
             float result;
 
@@ -144,7 +150,7 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = sizeof(double);
 
-            CheckBounds(ValueSize);
+            EnsureSufficientSizeRemaining(ValueSize);
 
             double result;
 
@@ -160,7 +166,7 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = 16;
 
-            CheckBounds(ValueSize);
+            EnsureSufficientSizeRemaining(ValueSize);
 
             Guid result;
 
@@ -172,20 +178,52 @@ namespace Vostok.Commons.Binary
             return result;
         }
 
-        public uint ReadVarlenUInt32() => throw new NotImplementedException();
+        public uint ReadVarlenUInt32()
+        {
+            throw new NotImplementedException();
+        }
 
-        public ulong ReadVarlenUInt64() => throw new NotImplementedException();
+        public ulong ReadVarlenUInt64()
+        {
+            throw new NotImplementedException();
+        }
 
-        public string ReadString(Encoding encoding) => throw new NotImplementedException();
+        public string ReadString(Encoding encoding)
+        {
+            return ReadString(encoding, ReadInt32());
+        }
 
-        public string ReadString(Encoding encoding, int length) => throw new NotImplementedException();
+        public string ReadString(Encoding encoding, int size)
+        {
+            EnsureSufficientSizeRemaining(size);
 
-        public byte[] ReadByteArray() => throw new NotImplementedException();
+            var result = encoding.GetString(Buffer, (int) Position, size);
 
-        public byte[] ReadByteArray(int size) => throw new NotImplementedException();
+            Position += size;
+
+            return result;
+        }
+
+        public byte[] ReadByteArray()
+        {
+            return ReadByteArray(ReadInt32());
+        }
+
+        public byte[] ReadByteArray(int size)
+        {
+            EnsureSufficientSizeRemaining(size);
+
+            var result = new byte[size];
+
+            System.Buffer.BlockCopy(Buffer, (int) Position, result, 0, size);
+
+            Position += size;
+
+            return result;
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void CheckBounds(int size)
+        private void EnsureSufficientSizeRemaining(int size)
         {
             if (size > BytesRemaining)
                 throw new IndexOutOfRangeException($"Requested to read {size} bytes from buffer, but it only has {BytesRemaining} bytes remaining.");

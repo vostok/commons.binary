@@ -30,7 +30,7 @@ namespace Vostok.Commons.Binary
         ulong ReadVarlenUInt64();
 
         [NotNull] string ReadString(Encoding encoding);
-        [NotNull] string ReadString(Encoding encoding, int length);
+        [NotNull] string ReadString(Encoding encoding, int size);
 
         [NotNull] byte[] ReadByteArray();
         [NotNull] byte[] ReadByteArray(int size);

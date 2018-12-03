@@ -19,7 +19,7 @@ namespace Vostok.Commons.Binary
             this.stream = stream ?? throw new ArgumentNullException(nameof(stream));
 
             if (!stream.CanWrite)
-                throw new AggregateException($"Input stream of type '{stream.GetType().Name}' was not writable.");
+                throw new AggregateException($"Output stream of type '{stream.GetType().Name}' was not writable.");
 
             buffer = new BinaryBufferWriter(BufferSize);
         }

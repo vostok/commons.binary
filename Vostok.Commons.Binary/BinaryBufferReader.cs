@@ -28,10 +28,13 @@ namespace Vostok.Commons.Binary
 
         public Endianness Endianness { get; set; } = EndiannessConverter.SystemEndianness;
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte ReadByte() => Buffer[Position++];
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool ReadBool() => Buffer[Position++] != 0;
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe short ReadInt16()
         {
             const int ValueSize = sizeof(short);
@@ -48,6 +51,7 @@ namespace Vostok.Commons.Binary
             return EndiannessConverter.Convert(result, Endianness);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe int ReadInt32()
         {
             const int ValueSize = sizeof(int);
@@ -64,6 +68,7 @@ namespace Vostok.Commons.Binary
             return EndiannessConverter.Convert(result, Endianness);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe long ReadInt64()
         {
             const int ValueSize = sizeof(long);
@@ -80,6 +85,7 @@ namespace Vostok.Commons.Binary
             return EndiannessConverter.Convert(result, Endianness);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe ushort ReadUInt16()
         {
             const int ValueSize = sizeof(ushort);
@@ -96,6 +102,7 @@ namespace Vostok.Commons.Binary
             return EndiannessConverter.Convert(result, Endianness);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe uint ReadUInt32()
         {
             const int ValueSize = sizeof(uint);
@@ -112,6 +119,7 @@ namespace Vostok.Commons.Binary
             return EndiannessConverter.Convert(result, Endianness);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe ulong ReadUInt64()
         {
             const int ValueSize = sizeof(ulong);
@@ -128,6 +136,7 @@ namespace Vostok.Commons.Binary
             return EndiannessConverter.Convert(result, Endianness);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe float ReadFloat()
         {
             const int ValueSize = sizeof(float);
@@ -144,6 +153,7 @@ namespace Vostok.Commons.Binary
             return EndiannessConverter.Convert(result, Endianness);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe double ReadDouble()
         {
             const int ValueSize = sizeof(double);
@@ -160,6 +170,7 @@ namespace Vostok.Commons.Binary
             return EndiannessConverter.Convert(result, Endianness);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe Guid ReadGuid()
         {
             const int ValueSize = 16;
@@ -176,6 +187,7 @@ namespace Vostok.Commons.Binary
             return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public uint ReadVarlenUInt32()
         {
             var result = 0U;
@@ -205,6 +217,7 @@ namespace Vostok.Commons.Binary
             return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ulong ReadVarlenUInt64()
         {
             var result = 0UL;
@@ -234,11 +247,13 @@ namespace Vostok.Commons.Binary
             return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ReadString(Encoding encoding)
         {
             return ReadString(encoding, ReadInt32());
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public string ReadString(Encoding encoding, int size)
         {
             EnsureSufficientSizeRemaining(size);
@@ -250,11 +265,13 @@ namespace Vostok.Commons.Binary
             return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte[] ReadByteArray()
         {
             return ReadByteArray(ReadInt32());
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public byte[] ReadByteArray(int size)
         {
             EnsureSufficientSizeRemaining(size);

@@ -6,6 +6,13 @@ using JetBrains.Annotations;
 
 namespace Vostok.Commons.Binary
 {
+    /// <summary>
+    /// <para>An implementation of <see cref="IBinaryWriter"/> based on an arbitrary <see cref="Stream"/>.</para>
+    /// <para>Supports changing <see cref="Endianness"/> on the fly.</para>
+    /// <para>Support for <see cref="Position"/> depends on whether the underlying stream <see cref="Stream.CanSeek"/>.</para>
+    /// <para>Not thread-safe.</para>
+    /// <para>Not efficient when writing large strings.</para>
+    /// </summary>
     [PublicAPI]
     internal class BinaryStreamWriter : IBinaryWriter
     {

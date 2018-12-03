@@ -77,7 +77,7 @@ namespace Vostok.Commons.Binary
         void WriteWithLength([NotNull] string value, [NotNull] Encoding encoding);
 
         /// <summary>
-        /// <para>Writes given string <paramref name="value"/> using given <see cref="Encoding.UTF8"/> encoding.</para>
+        /// <para>Writes given string <paramref name="value"/> using given <paramref name="encoding"/>.</para>
         /// <para>The value itself is not automatically prepended with length (readers of binary result must know the length from external sources).</para>
         /// </summary>
         void WriteWithoutLength([NotNull] string value, [NotNull] Encoding encoding);

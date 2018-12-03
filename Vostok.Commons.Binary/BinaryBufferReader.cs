@@ -24,27 +24,153 @@ namespace Vostok.Commons.Binary
 
         public Endianness Endianness { get; set; } = SystemEndianness;
 
-        public byte ReadByte() => throw new NotImplementedException();
+        public byte ReadByte() => Buffer[Position++];
 
-        public bool ReadBool() => throw new NotImplementedException();
+        public bool ReadBool() => Buffer[Position++] != 0;
 
-        public short ReadInt16() => throw new NotImplementedException();
+        public unsafe short ReadInt16()
+        {
+            const int ValueSize = sizeof(short);
 
-        public int ReadInt32() => throw new NotImplementedException();
+            CheckBounds(ValueSize);
 
-        public long ReadInt64() => throw new NotImplementedException();
+            short result;
 
-        public ushort ReadUInt16() => throw new NotImplementedException();
+            fixed (byte* ptr = &Buffer[Position])
+                result = *(short*) ptr;
 
-        public uint ReadUInt32() => throw new NotImplementedException();
+            Position += ValueSize;
 
-        public ulong ReadUInt64() => throw new NotImplementedException();
+            return EndiannessConverter.Convert(result, Endianness);
+        }
 
-        public float ReadFloat() => throw new NotImplementedException();
+        public unsafe int ReadInt32()
+        {
+            const int ValueSize = sizeof(int);
 
-        public double ReadDouble() => throw new NotImplementedException();
+            CheckBounds(ValueSize);
 
-        public Guid ReadGuid() => throw new NotImplementedException();
+            int result;
+
+            fixed (byte* ptr = &Buffer[Position])
+                result = *(int*) ptr;
+
+            Position += ValueSize;
+
+            return EndiannessConverter.Convert(result, Endianness);
+        }
+
+        public unsafe long ReadInt64()
+        {
+            const int ValueSize = sizeof(long);
+
+            CheckBounds(ValueSize);
+
+            long result;
+
+            fixed (byte* ptr = &Buffer[Position])
+                result = *(long*) ptr;
+
+            Position += ValueSize;
+
+            return EndiannessConverter.Convert(result, Endianness);
+        }
+
+        public unsafe ushort ReadUInt16()
+        {
+            const int ValueSize = sizeof(ushort);
+
+            CheckBounds(ValueSize);
+
+            ushort result;
+
+            fixed (byte* ptr = &Buffer[Position])
+                result = *(ushort*)ptr;
+
+            Position += ValueSize;
+
+            return EndiannessConverter.Convert(result, Endianness);
+        }
+
+        public unsafe uint ReadUInt32()
+        {
+            const int ValueSize = sizeof(uint);
+
+            CheckBounds(ValueSize);
+
+            uint result;
+
+            fixed (byte* ptr = &Buffer[Position])
+                result = *(uint*) ptr;
+
+            Position += ValueSize;
+
+            return EndiannessConverter.Convert(result, Endianness);
+        }
+
+        public unsafe ulong ReadUInt64()
+        {
+            const int ValueSize = sizeof(ulong);
+
+            CheckBounds(ValueSize);
+
+            ulong result;
+
+            fixed (byte* ptr = &Buffer[Position])
+                result = *(ulong*) ptr;
+
+            Position += ValueSize;
+
+            return EndiannessConverter.Convert(result, Endianness);
+        }
+
+        public unsafe float ReadFloat()
+        {
+            const int ValueSize = sizeof(float);
+
+            CheckBounds(ValueSize);
+
+            float result;
+
+            fixed (byte* ptr = &Buffer[Position])
+                result = *(float*) ptr;
+
+            Position += ValueSize;
+
+            return EndiannessConverter.Convert(result, Endianness);
+        }
+
+        public unsafe double ReadDouble()
+        {
+            const int ValueSize = sizeof(double);
+
+            CheckBounds(ValueSize);
+
+            double result;
+
+            fixed (byte* ptr = &Buffer[Position])
+                result = *(double*) ptr;
+
+            Position += ValueSize;
+
+            return EndiannessConverter.Convert(result, Endianness);
+        }
+
+        public unsafe Guid ReadGuid()
+        {
+            const int ValueSize = 16;
+
+            CheckBounds(ValueSize);
+
+            Guid result;
+
+            fixed (byte* ptr = &Buffer[Position])
+                result = *(Guid*) ptr;
+
+            Position += ValueSize;
+
+            return result;
+        }
 
         public uint ReadVarlenUInt32() => throw new NotImplementedException();
 

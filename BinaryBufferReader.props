@@ -6,7 +6,9 @@
 
   <ItemGroup>
     <Compile Remove="$(MSBuildThisFileDirectory)\Vostok.Commons.Binary\Endianness.cs" Link="Commons\Endianness.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)\Vostok.Commons.Binary\EndiannessConverter.cs" Link="Commons\EndiannessConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)\Vostok.Commons.Binary\Endianness.cs" Link="Commons\Endianness.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)\Vostok.Commons.Binary\EndiannessConverter.cs" Link="Commons\EndiannessConverter.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,8 +8,6 @@ namespace Vostok.Commons.Binary
     [PublicAPI]
     internal class BinaryBufferWriter : IBinaryWriter
     {
-        private static readonly Endianness SystemEndianness = BitConverter.IsLittleEndian ? Endianness.Little : Endianness.Big;
-
         private int position;
 
         public BinaryBufferWriter(byte[] buffer)
@@ -24,7 +22,7 @@ namespace Vostok.Commons.Binary
             Reset(initialCapacity);
         }
 
-        public Endianness Endianness { get; set; } = SystemEndianness;
+        public Endianness Endianness { get; set; } = EndiannessConverter.SystemEndianness;
 
         public byte[] Buffer { get; private set; }
 

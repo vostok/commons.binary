@@ -20,15 +20,13 @@ namespace Vostok.Commons.Binary
                 throw new ArgumentOutOfRangeException(nameof(position), $"Starting position {position} was outside of buffer (it's length is {buffer.Length}).");
         }
 
-        private static readonly Endianness SystemEndianness = BitConverter.IsLittleEndian ? Endianness.Little : Endianness.Big;
-
         public byte[] Buffer { get; }
 
         public long Position { get; set; }
 
         public long BytesRemaining => Buffer.Length - Position;
 
-        public Endianness Endianness { get; set; } = SystemEndianness;
+        public Endianness Endianness { get; set; } = EndiannessConverter.SystemEndianness;
 
         public byte ReadByte() => Buffer[Position++];
 
@@ -91,7 +89,7 @@ namespace Vostok.Commons.Binary
             ushort result;
 
             fixed (byte* ptr = &Buffer[Position])
-                result = *(ushort*)ptr;
+                result = *(ushort*) ptr;
 
             Position += ValueSize;
 
@@ -180,12 +178,60 @@ namespace Vostok.Commons.Binary
 
         public uint ReadVarlenUInt32()
         {
-            throw new NotImplementedException();
+            var result = 0U;
+            var shift = 0;
+            var size = 0;
+            var hasMore = true;
+
+            while (hasMore)
+            {
+                var currentByte = Buffer[Position + size];
+
+                if (size == sizeof(uint))
+                {
+                    result |= (uint) currentByte << shift;
+                    size++;
+                    break;
+                }
+
+                hasMore = (currentByte & 0x80) != 0;
+                result |= (uint) (currentByte & 0x7F) << shift;
+                shift += 7;
+                size++;
+            }
+
+            Position += size;
+
+            return result;
         }
 
         public ulong ReadVarlenUInt64()
         {
-            throw new NotImplementedException();
+            var result = 0UL;
+            var shift = 0;
+            var size = 0;
+            var hasMore = true;
+
+            while (hasMore)
+            {
+                var currentByte = Buffer[Position + size];
+
+                if (size == sizeof(ulong))
+                {
+                    result |= (ulong) currentByte << shift;
+                    size++;
+                    break;
+                }
+
+                hasMore = (currentByte & 0x80) != 0;
+                result |= (ulong) (currentByte & 0x7F) << shift;
+                shift += 7;
+                size++;
+            }
+
+            Position += size;
+
+            return result;
         }
 
         public string ReadString(Encoding encoding)

@@ -30,11 +30,6 @@ namespace Vostok.Commons.Binary
             return DateTime.FromBinary(reader.ReadInt64());
         }
 
-        public static DateTimeOffset ReadDateTimeOffset([NotNull] this IBinaryReader reader)
-        {
-            return new DateTimeOffset(reader.ReadDateTime(), reader.ReadTimeSpan());
-        }
-
         #endregion
 
         #region Collections

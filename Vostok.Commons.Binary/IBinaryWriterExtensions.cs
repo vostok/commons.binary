@@ -34,12 +34,6 @@ namespace Vostok.Commons.Binary
             writer.Write(value.ToBinary());
         }
 
-        public static void Write([NotNull] this IBinaryWriter writer, DateTimeOffset value)
-        {
-            writer.Write(value.UtcDateTime);
-            writer.Write(value.Offset);
-        }
-
         #endregion
 
         #region Collections

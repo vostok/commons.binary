@@ -116,14 +116,14 @@ namespace Vostok.Commons.Binary
 
         public uint ReadVarlenUInt32()
         {
-            LoadIntoBufferAtMost(5);
+            LoadIntoBufferAtMost(5, b => (b & 0x80) == 0);
 
             return buffer.ReadVarlenUInt32();
         }
 
         public ulong ReadVarlenUInt64()
         {
-            LoadIntoBufferAtMost(9);
+            LoadIntoBufferAtMost(9, b => (b & 0x80) == 0);
 
             return buffer.ReadVarlenUInt64();
         }
@@ -160,9 +160,20 @@ namespace Vostok.Commons.Binary
             buffer.Position = 0;
         }
 
-        private void LoadIntoBufferAtMost(int size)
+        private void LoadIntoBufferAtMost(int size, Func<byte, bool> stopCriterion)
         {
-            ReadFromStreamExactly(buffer.Buffer, 0, size);
+            var bytesRead = 0;
+
+            do
+            {
+                ReadFromStreamExactly(buffer.Buffer, bytesRead, 1);
+
+                if (stopCriterion(buffer.Buffer[bytesRead]))
+                    break;
+
+                bytesRead++;
+
+            } while (bytesRead < size);
 
             buffer.Position = 0;
         }
@@ -176,25 +187,6 @@ namespace Vostok.Commons.Binary
                 var bytesRead = stream.Read(destination, offset + totalBytesRead, size - totalBytesRead);
                 if (bytesRead == 0)
                     throw new Exception($"Can't read from stream: expected to read {size} bytes, but read only {totalBytesRead} bytes.");
-
-                totalBytesRead += bytesRead;
-            }
-        }
-
-        private void ReadFromStreamAtMost(byte[] destination, int offset, int sizeLimit)
-        {
-            var totalBytesRead = 0;
-
-            while (totalBytesRead < sizeLimit)
-            {
-                var bytesRead = stream.Read(destination, offset + totalBytesRead, sizeLimit - totalBytesRead);
-                if (bytesRead == 0)
-                {
-                    if (totalBytesRead > 0)
-                        break;
-
-                    throw new Exception("Can't read from stream: expected to read at least a single byte, but read nothing.");
-                }
 
                 totalBytesRead += bytesRead;
             }

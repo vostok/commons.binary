@@ -42,6 +42,10 @@ namespace Vostok.Commons.Binary
             => to == SystemEndianness ? value : Swap(value);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Guid Convert(Guid value, Endianness to)
+            => to == SystemEndianness ? value : Swap(value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static unsafe short Swap(short value)
         {
             var returnValue = short.MinValue;
@@ -117,6 +121,18 @@ namespace Vostok.Commons.Binary
             var returnValue = double.MinValue;
 
             Swap8((byte*) &value, (byte*) &returnValue);
+
+            return returnValue;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static unsafe Guid Swap(Guid value)
+        {
+            var returnValue = value;
+
+            Swap4((byte*) &value, (byte*) &returnValue);
+            Swap2((byte*) &value + 4, (byte*) &returnValue + 4);
+            Swap2((byte*) &value + 6, (byte*) &returnValue + 6);
 
             return returnValue;
         }

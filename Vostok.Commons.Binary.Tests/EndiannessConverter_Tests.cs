@@ -148,6 +148,46 @@ namespace Vostok.Commons.Binary.Tests
             convertedBack.Should().Be(value);
         }
 
+        [TestCase("01020304-0506-0708-1020-304050607080", "04030201-0605-0807-1020-304050607080")]
+        public void Should_correctly_swap_endianness_for_Guid_values(string guidString, string convertedGuidString)
+        {
+            var value = Guid.Parse(guidString);
+
+            var expectedConvertedValue = Guid.Parse(convertedGuidString);
+            
+            var converted = EndiannessConverter.Swap(value);
+
+            converted.Should().Be(expectedConvertedValue);
+        }
+
+        [TestCase(Endianness.Big)]
+        [TestCase(Endianness.Little)]
+        public unsafe void Should_correctly_convert_Guid_values(Endianness endianness)
+        {
+            var value = Guid.Parse("01020304-0506-0708-1020-304050607080");
+
+            var expectedBytes = endianness == Endianness.Big
+                ? new byte[]
+                {
+                    0x01, 0x02, 0x03, 0x04,
+                    0x05, 0x06,
+                    0x07, 0x08,
+                    0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80
+                }
+                : new byte[]
+                {
+                    0x04, 0x03, 0x02, 0x01,
+                    0x06, 0x05,
+                    0x08, 0x07,
+                    0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x80
+                };
+
+            var converted = EndiannessConverter.Convert(value, endianness);
+
+            fixed (byte* b = expectedBytes)
+                converted.Should().Be(*(Guid*) b);
+        }
+
         [Test]
         public void Convert_should_not_swap_byte_order_if_number_is_already_in_requested_endianness()
         {

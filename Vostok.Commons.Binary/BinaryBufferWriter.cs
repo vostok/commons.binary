@@ -211,6 +211,8 @@ namespace Vostok.Commons.Binary
         {
             const int ValueSize = 16;
 
+            value = EndiannessConverter.Convert(value, Endianness);
+
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])

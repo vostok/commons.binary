@@ -189,7 +189,7 @@ namespace Vostok.Commons.Binary
 
             Position += ValueSize;
 
-            return result;
+            return EndiannessConverter.Convert(result, Endianness);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

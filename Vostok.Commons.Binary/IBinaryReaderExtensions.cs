@@ -115,5 +115,35 @@ namespace Vostok.Commons.Binary
         }
 
         #endregion
+
+        #region Jump
+
+        public static JumpToken JumpTo([NotNull] this IBinaryReader reader, long position)
+        {
+            var originalPosition = reader.Position;
+
+            reader.Position = position;
+
+            return new JumpToken(reader, originalPosition);
+        }
+
+        public struct JumpToken : IDisposable
+        {
+            private readonly IBinaryReader reader;
+            private readonly long position;
+
+            public JumpToken(IBinaryReader reader, long position)
+            {
+                this.reader = reader;
+                this.position = position;
+            }
+
+            public void Dispose()
+            {
+                reader.Position = position;
+            }
+        }
+
+        #endregion
     }
 }

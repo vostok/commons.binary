@@ -172,7 +172,6 @@ namespace Vostok.Commons.Binary
                     break;
 
                 bytesRead++;
-
             } while (bytesRead < size);
 
             buffer.Position = 0;

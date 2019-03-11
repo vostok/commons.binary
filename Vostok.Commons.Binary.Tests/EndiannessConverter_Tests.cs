@@ -13,7 +13,7 @@ namespace Vostok.Commons.Binary.Tests
 
         [TestCase(short.MinValue)]
         [TestCase(short.MaxValue)]
-        [TestCase((short) 0)]
+        [TestCase((short)0)]
         public void Should_correctly_swap_endianness_for_short_values(short value)
         {
             var converted = EndiannessConverter.Swap(value);
@@ -154,7 +154,7 @@ namespace Vostok.Commons.Binary.Tests
             var value = Guid.Parse(guidString);
 
             var expectedConvertedValue = Guid.Parse(convertedGuidString);
-            
+
             var converted = EndiannessConverter.Swap(value);
 
             converted.Should().Be(expectedConvertedValue);
@@ -185,7 +185,7 @@ namespace Vostok.Commons.Binary.Tests
             var converted = EndiannessConverter.Convert(value, endianness);
 
             fixed (byte* b = expectedBytes)
-                converted.Should().Be(*(Guid*) b);
+                converted.Should().Be(*(Guid*)b);
         }
 
         [Test]

@@ -45,7 +45,7 @@ namespace Vostok.Commons.Binary
                 if (value < 0 || value > Buffer.Length)
                     throw new IndexOutOfRangeException();
 
-                position = (int) value;
+                position = (int)value;
 
                 if (position > Length)
                     Length = position;
@@ -67,7 +67,7 @@ namespace Vostok.Commons.Binary
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write(bool value)
         {
-            Write(value ? (byte) 1 : (byte) 0);
+            Write(value ? (byte)1 : (byte)0);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -80,7 +80,7 @@ namespace Vostok.Commons.Binary
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
-                *(short*) ptr = value;
+                *(short*)ptr = value;
 
             position += ValueSize;
 
@@ -97,7 +97,7 @@ namespace Vostok.Commons.Binary
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
-                *(int*) ptr = value;
+                *(int*)ptr = value;
 
             position += ValueSize;
 
@@ -114,7 +114,7 @@ namespace Vostok.Commons.Binary
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
-                *(long*) ptr = value;
+                *(long*)ptr = value;
 
             position += ValueSize;
 
@@ -131,7 +131,7 @@ namespace Vostok.Commons.Binary
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
-                *(ushort*) ptr = value;
+                *(ushort*)ptr = value;
 
             position += ValueSize;
 
@@ -148,7 +148,7 @@ namespace Vostok.Commons.Binary
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
-                *(uint*) ptr = value;
+                *(uint*)ptr = value;
 
             position += ValueSize;
 
@@ -165,7 +165,7 @@ namespace Vostok.Commons.Binary
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
-                *(ulong*) ptr = value;
+                *(ulong*)ptr = value;
 
             position += ValueSize;
 
@@ -182,7 +182,7 @@ namespace Vostok.Commons.Binary
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
-                *(float*) ptr = value;
+                *(float*)ptr = value;
 
             position += ValueSize;
 
@@ -199,7 +199,7 @@ namespace Vostok.Commons.Binary
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
-                *(double*) ptr = value;
+                *(double*)ptr = value;
 
             position += ValueSize;
 
@@ -216,7 +216,7 @@ namespace Vostok.Commons.Binary
             EnsureCapacity(ValueSize);
 
             fixed (byte* ptr = &Buffer[position])
-                *(Guid*) ptr = value;
+                *(Guid*)ptr = value;
 
             position += ValueSize;
 
@@ -234,12 +234,12 @@ namespace Vostok.Commons.Binary
             {
                 if (bytesWritten == sizeof(uint))
                 {
-                    Buffer[position + bytesWritten] = (byte) value;
+                    Buffer[position + bytesWritten] = (byte)value;
                     bytesWritten++;
                     break;
                 }
 
-                var currentByte = (byte) (value & 0x7F);
+                var currentByte = (byte)(value & 0x7F);
                 value >>= 7;
                 if (value > 0)
                     currentByte |= 0x80;
@@ -265,12 +265,12 @@ namespace Vostok.Commons.Binary
             {
                 if (bytesWritten == sizeof(ulong))
                 {
-                    Buffer[position + bytesWritten] = (byte) value;
+                    Buffer[position + bytesWritten] = (byte)value;
                     bytesWritten++;
                     break;
                 }
 
-                var currentByte = (byte) (value & 0x7F);
+                var currentByte = (byte)(value & 0x7F);
                 value >>= 7;
                 if (value > 0)
                     currentByte |= 0x80;

@@ -39,7 +39,7 @@ namespace Vostok.Commons.Binary
         #region Collections
 
         public static void WriteCollection<T>(
-            [NotNull] this IBinaryWriter writer, 
+            [NotNull] this IBinaryWriter writer,
             [NotNull] ICollection<T> items,
             [NotNull] Action<IBinaryWriter, T> writeSingleValue)
         {

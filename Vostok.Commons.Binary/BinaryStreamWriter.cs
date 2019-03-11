@@ -49,7 +49,7 @@ namespace Vostok.Commons.Binary
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write(bool value)
-            => Write(value ? (byte) 1 : (byte) 0);
+            => Write(value ? (byte)1 : (byte)0);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write(short value)

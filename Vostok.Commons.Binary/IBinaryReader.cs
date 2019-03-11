@@ -74,17 +74,20 @@ namespace Vostok.Commons.Binary
         /// <para>Reads a string in given <paramref name="encoding"/>.</para>
         /// <para>Assumes that the value itself is prepended by its Int32 length.</para>
         /// </summary>
-        [NotNull] string ReadString(Encoding encoding);
+        [NotNull]
+        string ReadString(Encoding encoding);
 
         /// <summary>
         /// <para>Reads a byte array.</para>
         /// <para>Assumes that the value itself is prepended by its Int32 length.</para>
         /// </summary>
-        [NotNull] byte[] ReadByteArray();
+        [NotNull]
+        byte[] ReadByteArray();
 
         /// <summary>
         /// Reads a byte array of given <paramref name="size"/>.
         /// </summary>
-        [NotNull] byte[] ReadByteArray(int size);
+        [NotNull]
+        byte[] ReadByteArray(int size);
     }
 }

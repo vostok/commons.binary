@@ -49,7 +49,7 @@ namespace Vostok.Commons.Binary
             short result;
 
             fixed (byte* ptr = &Buffer[Position])
-                result = *(short*) ptr;
+                result = *(short*)ptr;
 
             Position += ValueSize;
 
@@ -66,7 +66,7 @@ namespace Vostok.Commons.Binary
             int result;
 
             fixed (byte* ptr = &Buffer[Position])
-                result = *(int*) ptr;
+                result = *(int*)ptr;
 
             Position += ValueSize;
 
@@ -83,7 +83,7 @@ namespace Vostok.Commons.Binary
             long result;
 
             fixed (byte* ptr = &Buffer[Position])
-                result = *(long*) ptr;
+                result = *(long*)ptr;
 
             Position += ValueSize;
 
@@ -100,7 +100,7 @@ namespace Vostok.Commons.Binary
             ushort result;
 
             fixed (byte* ptr = &Buffer[Position])
-                result = *(ushort*) ptr;
+                result = *(ushort*)ptr;
 
             Position += ValueSize;
 
@@ -117,7 +117,7 @@ namespace Vostok.Commons.Binary
             uint result;
 
             fixed (byte* ptr = &Buffer[Position])
-                result = *(uint*) ptr;
+                result = *(uint*)ptr;
 
             Position += ValueSize;
 
@@ -134,7 +134,7 @@ namespace Vostok.Commons.Binary
             ulong result;
 
             fixed (byte* ptr = &Buffer[Position])
-                result = *(ulong*) ptr;
+                result = *(ulong*)ptr;
 
             Position += ValueSize;
 
@@ -151,7 +151,7 @@ namespace Vostok.Commons.Binary
             float result;
 
             fixed (byte* ptr = &Buffer[Position])
-                result = *(float*) ptr;
+                result = *(float*)ptr;
 
             Position += ValueSize;
 
@@ -168,7 +168,7 @@ namespace Vostok.Commons.Binary
             double result;
 
             fixed (byte* ptr = &Buffer[Position])
-                result = *(double*) ptr;
+                result = *(double*)ptr;
 
             Position += ValueSize;
 
@@ -185,7 +185,7 @@ namespace Vostok.Commons.Binary
             Guid result;
 
             fixed (byte* ptr = &Buffer[Position])
-                result = *(Guid*) ptr;
+                result = *(Guid*)ptr;
 
             Position += ValueSize;
 
@@ -206,13 +206,13 @@ namespace Vostok.Commons.Binary
 
                 if (size == sizeof(uint))
                 {
-                    result |= (uint) currentByte << shift;
+                    result |= (uint)currentByte << shift;
                     size++;
                     break;
                 }
 
                 hasMore = (currentByte & 0x80) != 0;
-                result |= (uint) (currentByte & 0x7F) << shift;
+                result |= (uint)(currentByte & 0x7F) << shift;
                 shift += 7;
                 size++;
             }
@@ -236,13 +236,13 @@ namespace Vostok.Commons.Binary
 
                 if (size == sizeof(ulong))
                 {
-                    result |= (ulong) currentByte << shift;
+                    result |= (ulong)currentByte << shift;
                     size++;
                     break;
                 }
 
                 hasMore = (currentByte & 0x80) != 0;
-                result |= (ulong) (currentByte & 0x7F) << shift;
+                result |= (ulong)(currentByte & 0x7F) << shift;
                 shift += 7;
                 size++;
             }
@@ -259,7 +259,7 @@ namespace Vostok.Commons.Binary
 
             EnsureSufficientSizeRemaining(size);
 
-            var result = encoding.GetString(Buffer, (int) Position, size);
+            var result = encoding.GetString(Buffer, (int)Position, size);
 
             Position += size;
 
@@ -279,7 +279,7 @@ namespace Vostok.Commons.Binary
 
             var result = new byte[size];
 
-            System.Buffer.BlockCopy(Buffer, (int) Position, result, 0, size);
+            System.Buffer.BlockCopy(Buffer, (int)Position, result, 0, size);
 
             Position += size;
 

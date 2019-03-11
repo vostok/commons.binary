@@ -36,7 +36,7 @@ namespace Vostok.Commons.Binary.Tests
 
             writer.Position += 5;
 
-            writer.Length.Should().Be((int) writer.Position);
+            writer.Length.Should().Be((int)writer.Position);
         }
 
         [Test]

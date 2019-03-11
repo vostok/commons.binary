@@ -50,7 +50,7 @@ namespace Vostok.Commons.Binary
         {
             var returnValue = short.MinValue;
 
-            Swap2((byte*) &value, (byte*) &returnValue);
+            Swap2((byte*)&value, (byte*)&returnValue);
 
             return returnValue;
         }
@@ -60,7 +60,7 @@ namespace Vostok.Commons.Binary
         {
             var returnValue = ushort.MinValue;
 
-            Swap2((byte*) &value, (byte*) &returnValue);
+            Swap2((byte*)&value, (byte*)&returnValue);
 
             return returnValue;
         }
@@ -70,7 +70,7 @@ namespace Vostok.Commons.Binary
         {
             var returnValue = int.MinValue;
 
-            Swap4((byte*) &value, (byte*) &returnValue);
+            Swap4((byte*)&value, (byte*)&returnValue);
 
             return returnValue;
         }
@@ -80,7 +80,7 @@ namespace Vostok.Commons.Binary
         {
             var returnValue = uint.MinValue;
 
-            Swap4((byte*) &value, (byte*) &returnValue);
+            Swap4((byte*)&value, (byte*)&returnValue);
 
             return returnValue;
         }
@@ -90,7 +90,7 @@ namespace Vostok.Commons.Binary
         {
             var returnValue = long.MinValue;
 
-            Swap8((byte*) &value, (byte*) &returnValue);
+            Swap8((byte*)&value, (byte*)&returnValue);
 
             return returnValue;
         }
@@ -100,7 +100,7 @@ namespace Vostok.Commons.Binary
         {
             var returnValue = ulong.MinValue;
 
-            Swap8((byte*) &value, (byte*) &returnValue);
+            Swap8((byte*)&value, (byte*)&returnValue);
 
             return returnValue;
         }
@@ -110,7 +110,7 @@ namespace Vostok.Commons.Binary
         {
             var returnValue = float.MinValue;
 
-            Swap4((byte*) &value, (byte*) &returnValue);
+            Swap4((byte*)&value, (byte*)&returnValue);
 
             return returnValue;
         }
@@ -120,7 +120,7 @@ namespace Vostok.Commons.Binary
         {
             var returnValue = double.MinValue;
 
-            Swap8((byte*) &value, (byte*) &returnValue);
+            Swap8((byte*)&value, (byte*)&returnValue);
 
             return returnValue;
         }
@@ -130,9 +130,9 @@ namespace Vostok.Commons.Binary
         {
             var returnValue = value;
 
-            Swap4((byte*) &value, (byte*) &returnValue);
-            Swap2((byte*) &value + 4, (byte*) &returnValue + 4);
-            Swap2((byte*) &value + 6, (byte*) &returnValue + 6);
+            Swap4((byte*)&value, (byte*)&returnValue);
+            Swap2((byte*)&value + 4, (byte*)&returnValue + 4);
+            Swap2((byte*)&value + 6, (byte*)&returnValue + 6);
 
             return returnValue;
         }

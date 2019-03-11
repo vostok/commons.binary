@@ -5,6 +5,7 @@ namespace Vostok.Commons.Binary
     [PublicAPI]
     internal enum Endianness
     {
-        Little, Big
+        Little,
+        Big
     }
 }

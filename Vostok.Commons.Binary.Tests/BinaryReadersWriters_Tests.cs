@@ -15,7 +15,7 @@ namespace Vostok.Commons.Binary.Tests
     {
         [TestCase(byte.MinValue)]
         [TestCase(byte.MaxValue)]
-        [TestCase((byte) 0xF0)]
+        [TestCase((byte)0xF0)]
         public void Should_correctly_write_and_read_byte_values(byte value)
         {
             Test(value, (item, writer) => writer.Write(item), reader => reader.ReadByte());
@@ -32,9 +32,9 @@ namespace Vostok.Commons.Binary.Tests
         [TestCase(short.MinValue + 1)]
         [TestCase(short.MaxValue)]
         [TestCase(short.MaxValue - 1)]
-        [TestCase((short) 0)]
-        [TestCase((short) 1)]
-        [TestCase((short) -1)]
+        [TestCase((short)0)]
+        [TestCase((short)1)]
+        [TestCase((short)-1)]
         public void Should_correctly_write_and_read_int16_values(short value)
         {
             Test(value, (item, writer) => writer.Write(item), reader => reader.ReadInt16());
@@ -42,10 +42,10 @@ namespace Vostok.Commons.Binary.Tests
 
         [TestCase(ushort.MinValue)]
         [TestCase(ushort.MaxValue)]
-        [TestCase((ushort) (ushort.MinValue + 1))]
-        [TestCase((ushort) (ushort.MaxValue - 1))]
-        [TestCase((ushort) 0)]
-        [TestCase((ushort) 1)]
+        [TestCase((ushort)(ushort.MinValue + 1))]
+        [TestCase((ushort)(ushort.MaxValue - 1))]
+        [TestCase((ushort)0)]
+        [TestCase((ushort)1)]
         public void Should_correctly_write_and_read_uint16_values(ushort value)
         {
             Test(value, (item, writer) => writer.Write(item), reader => reader.ReadUInt16());
@@ -149,7 +149,6 @@ namespace Vostok.Commons.Binary.Tests
             Test(value, (item, writer) => writer.WriteVarlen(item), reader => reader.ReadVarlenUInt64());
         }
 
-
         [TestCase(0f)]
         [TestCase(float.MinValue)]
         [TestCase(float.MaxValue)]
@@ -217,9 +216,9 @@ namespace Vostok.Commons.Binary.Tests
             Test(Encoding.Unicode.GetString(bytes), (value, writer) => writer.WriteWithLength(value), reader => reader.ReadString());
         }
 
-        [TestCase((byte) 0xFF)]
-        [TestCase((byte) 0xFF, (byte) 0xAB)]
-        [TestCase((byte) 0xC0, (byte) 0xFF, (byte) 0xEE, (byte) 0xBA, (byte) 0xBE)]
+        [TestCase((byte)0xFF)]
+        [TestCase((byte)0xFF, (byte)0xAB)]
+        [TestCase((byte)0xC0, (byte)0xFF, (byte)0xEE, (byte)0xBA, (byte)0xBE)]
         public void Should_correctly_write_and_read_byte_array_values(params byte[] value)
         {
             Test(value, (item, writer) => writer.WriteWithLength(item), reader => reader.ReadByteArray());
@@ -244,7 +243,7 @@ namespace Vostok.Commons.Binary.Tests
             Test(DateTime.UtcNow, (item, writer) => writer.Write(item), reader => reader.ReadDateTime());
         }
 
-        [TestCase()]
+        [TestCase]
         [TestCase(1)]
         [TestCase(1, 2, 3)]
         public void Should_correctly_write_and_read_arrays(params int[] values)
@@ -252,7 +251,7 @@ namespace Vostok.Commons.Binary.Tests
             Test(values, (item, writer) => writer.WriteCollection(item, (w, e) => w.Write(e)), reader => reader.ReadArray(r => r.ReadInt32()));
         }
 
-        [TestCase()]
+        [TestCase]
         [TestCase(1)]
         [TestCase(1, 2, 3)]
         public void Should_correctly_write_and_read_lists(params int[] values)
@@ -262,7 +261,7 @@ namespace Vostok.Commons.Binary.Tests
             Test(list, (item, writer) => writer.WriteCollection(item, (w, e) => w.Write(e)), reader => reader.ReadList(r => r.ReadInt32()));
         }
 
-        [TestCase()]
+        [TestCase]
         [TestCase(1)]
         [TestCase(1, 2, 3)]
         public void Should_correctly_write_and_read_sets(params int[] values)
@@ -272,26 +271,29 @@ namespace Vostok.Commons.Binary.Tests
             Test(set, (item, writer) => writer.WriteCollection(item, (w, e) => w.Write(e)), reader => reader.ReadSet(r => r.ReadInt32()));
         }
 
-        [TestCase()]
+        [TestCase]
         [TestCase(1)]
         [TestCase(1, 2, 3)]
         public void Should_correctly_write_and_read_dictionaries(params int[] values)
         {
             var dictionary = values.ToDictionary(v => v, v => v + 1);
 
-            Test(dictionary, 
-                (item, writer) => writer.WriteDictionary(item, (w, e) => w.Write(e), (w, e) => w.Write(e)), 
+            Test(
+                dictionary,
+                (item, writer) => writer.WriteDictionary(item, (w, e) => w.Write(e), (w, e) => w.Write(e)),
                 reader => reader.ReadDictionary(r => r.ReadInt32(), r => r.ReadInt32()));
         }
 
         [Test]
         public void Should_correctly_write_and_read_nullable_structs()
         {
-            Test(null, 
+            Test(
+                null,
                 (item, writer) => writer.WriteNullable(item, (w, i) => w.Write(i)),
                 reader => reader.ReadNullableStruct(r => r.ReadInt32()));
 
-            Test(456,
+            Test(
+                456,
                 (item, writer) => writer.WriteNullable(item, (w, i) => w.Write(i)),
                 reader => reader.ReadNullableStruct(r => r.ReadInt32()));
         }
@@ -299,18 +301,20 @@ namespace Vostok.Commons.Binary.Tests
         [Test]
         public void Should_correctly_write_and_read_nullable_classes()
         {
-            Test(null,
+            Test(
+                null,
                 (item, writer) => writer.WriteNullable(item, (w, i) => w.WriteWithLength(i)),
                 reader => reader.ReadNullable(r => r.ReadString()));
 
-            Test(Guid.NewGuid().ToString(),
+            Test(
+                Guid.NewGuid().ToString(),
                 (item, writer) => writer.WriteNullable(item, (w, i) => w.WriteWithLength(i)),
                 reader => reader.ReadNullable(r => r.ReadString()));
         }
 
         #region Helpers 
 
-            private static void Test<T>(T item, Action<T, IBinaryWriter> write, Func<IBinaryReader, T> read)
+        private static void Test<T>(T item, Action<T, IBinaryWriter> write, Func<IBinaryReader, T> read)
         {
             TestBufferWithBuffer(item, write, read, Endianness.Little, true);
             TestBufferWithBuffer(item, write, read, Endianness.Little, false);
@@ -321,7 +325,7 @@ namespace Vostok.Commons.Binary.Tests
             TestBufferWithStream(item, write, read, Endianness.Little, false);
             TestBufferWithStream(item, write, read, Endianness.Big, true);
             TestBufferWithStream(item, write, read, Endianness.Big, false);
-            
+
             TestStreamWithStream(item, write, read, Endianness.Little, true);
             TestStreamWithStream(item, write, read, Endianness.Little, false);
             TestStreamWithStream(item, write, read, Endianness.Big, true);
@@ -334,32 +338,52 @@ namespace Vostok.Commons.Binary.Tests
         }
 
         private static void TestBufferWithBuffer<T>(
-            T item, Action<T, IBinaryWriter> write, Func<IBinaryReader, T> read, Endianness endianness, bool useGarbage)
+            T item,
+            Action<T, IBinaryWriter> write,
+            Func<IBinaryReader, T> read,
+            Endianness endianness,
+            bool useGarbage)
         {
             TestBufferWith(item, write, read, endianness, useGarbage, CreateBufferReader);
         }
 
         private static void TestBufferWithStream<T>(
-            T item, Action<T, IBinaryWriter> write, Func<IBinaryReader, T> read, Endianness endianness, bool useGarbage)
+            T item,
+            Action<T, IBinaryWriter> write,
+            Func<IBinaryReader, T> read,
+            Endianness endianness,
+            bool useGarbage)
         {
             TestBufferWith(item, write, read, endianness, useGarbage, CreateStreamReader);
         }
 
         private static void TestStreamWithStream<T>(
-            T item, Action<T, IBinaryWriter> write, Func<IBinaryReader, T> read, Endianness endianness, bool useGarbage)
+            T item,
+            Action<T, IBinaryWriter> write,
+            Func<IBinaryReader, T> read,
+            Endianness endianness,
+            bool useGarbage)
         {
             TestStreamWith(item, write, read, endianness, useGarbage, CreateStreamReader);
         }
 
         private static void TestStreamWithBuffer<T>(
-            T item, Action<T, IBinaryWriter> write, Func<IBinaryReader, T> read, Endianness endianness, bool useGarbage)
+            T item,
+            Action<T, IBinaryWriter> write,
+            Func<IBinaryReader, T> read,
+            Endianness endianness,
+            bool useGarbage)
         {
             TestStreamWith(item, write, read, endianness, useGarbage, CreateBufferReader);
         }
 
         private static void TestBufferWith<T>(
-            T item, Action<T, IBinaryWriter> write, Func<IBinaryReader, T> read,
-            Endianness endianness, bool useGarbage, Func<byte[], int, Endianness, IBinaryReader> createReader)
+            T item,
+            Action<T, IBinaryWriter> write,
+            Func<IBinaryReader, T> read,
+            Endianness endianness,
+            bool useGarbage,
+            Func<byte[], int, Endianness, IBinaryReader> createReader)
         {
             var writer = new BinaryBufferWriter(1)
             {
@@ -394,8 +418,12 @@ namespace Vostok.Commons.Binary.Tests
         }
 
         private static void TestStreamWith<T>(
-            T item, Action<T, IBinaryWriter> write, Func<IBinaryReader, T> read,
-            Endianness endianness, bool useGarbage, Func<byte[], int, Endianness, IBinaryReader> createReader)
+            T item,
+            Action<T, IBinaryWriter> write,
+            Func<IBinaryReader, T> read,
+            Endianness endianness,
+            bool useGarbage,
+            Func<byte[], int, Endianness, IBinaryReader> createReader)
         {
             var stream = new MemoryStream(1);
 
@@ -445,16 +473,16 @@ namespace Vostok.Commons.Binary.Tests
 
         private static BinaryBufferReader CreateBufferReader(byte[] buffer, int offset, Endianness endianness)
         {
-            return new BinaryBufferReader(buffer, offset) { Endianness = endianness };
+            return new BinaryBufferReader(buffer, offset) {Endianness = endianness};
         }
 
         private static BinaryStreamReader CreateStreamReader(byte[] buffer, int offset, Endianness endianness)
         {
-            var memoryStream = new MemoryStream(buffer) { Position = offset };
+            var memoryStream = new MemoryStream(buffer) {Position = offset};
 
             var slowStream = new SlowReadStream(memoryStream);
 
-            return new BinaryStreamReader(slowStream) { Endianness = endianness };
+            return new BinaryStreamReader(slowStream) {Endianness = endianness};
         }
 
         private class SlowReadStream : Stream
@@ -494,7 +522,7 @@ namespace Vostok.Commons.Binary.Tests
 
             public override void Flush()
                 => throw new NotSupportedException();
-        } 
+        }
 
         #endregion
     }

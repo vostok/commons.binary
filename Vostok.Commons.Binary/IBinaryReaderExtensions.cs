@@ -80,7 +80,7 @@ namespace Vostok.Commons.Binary
         public static Dictionary<TKey, TValue> ReadDictionary<TKey, TValue>(
             [NotNull] this IBinaryReader reader,
             [NotNull] Func<IBinaryReader, TKey> readSingleKey,
-            [NotNull]Func<IBinaryReader, TValue> readSingleValue)
+            [NotNull] Func<IBinaryReader, TValue> readSingleValue)
         {
             var count = reader.ReadInt32();
             var result = new Dictionary<TKey, TValue>(count);
@@ -111,7 +111,7 @@ namespace Vostok.Commons.Binary
         public static T? ReadNullableStruct<T>([NotNull] this IBinaryReader reader, [NotNull] Func<IBinaryReader, T> readNonNullValue)
             where T : struct
         {
-            return reader.ReadBool() ? readNonNullValue(reader) : (T?) null;
+            return reader.ReadBool() ? readNonNullValue(reader) : (T?)null;
         }
 
         #endregion

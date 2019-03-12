@@ -373,6 +373,22 @@ namespace Vostok.Commons.Binary
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Resize(int capacity)
+        {
+            if (capacity == Buffer.Length)
+                return;
+
+            var newBuffer = new byte[capacity];
+
+            System.Buffer.BlockCopy(Buffer, 0, newBuffer, 0, Math.Min(capacity, Length));
+
+            Buffer = newBuffer;
+
+            if (Position > capacity)
+                Position = capacity;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void IncreaseLengthIfNeeded()
         {
             if (position > Length)

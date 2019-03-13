@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -91,6 +92,45 @@ namespace Vostok.Commons.Binary.Tests
 
             reader.ReadInt32().Should().Be(1);
             reader.ReadInt32().Should().Be(2);
+        }
+
+        [Test]
+        public void Manual_resize_that_leads_to_expansion_should_preserve_current_data()
+        {
+            var writer = new BinaryBufferWriter(32);
+
+            writer.Write(Guid.NewGuid());
+
+            var dataBefore = writer.FilledSegment.ToArray();
+            var positionBefore = writer.Position;
+            var lengthBefore = writer.Length;
+
+            writer.Resize(33);
+
+            writer.Buffer.Length.Should().Be(33);
+            writer.FilledSegment.Should().Equal(dataBefore);
+            writer.Position.Should().Be(positionBefore);
+            writer.Length.Should().Be(lengthBefore);
+        }
+
+        [Test]
+        public void Manual_resize_to_current_capacity_should_have_no_effect()
+        {
+            var writer = new BinaryBufferWriter(32);
+
+            writer.Write(Guid.NewGuid());
+
+            var bufferBefore = writer.Buffer;
+            var dataBefore = writer.FilledSegment.ToArray();
+            var positionBefore = writer.Position;
+            var lengthBefore = writer.Length;
+
+            writer.Resize(writer.Buffer.Length);
+
+            writer.Buffer.Should().BeSameAs(bufferBefore);
+            writer.FilledSegment.Should().Equal(dataBefore);
+            writer.Position.Should().Be(positionBefore);
+            writer.Length.Should().Be(lengthBefore);
         }
     }
 }

@@ -8,12 +8,41 @@ namespace Vostok.Commons.Binary
     [PublicAPI]
     internal static class IBinaryReaderExtensions
     {
+        #region Endianness
+
+        public static IBinaryReader EnsureBigEndian(this IBinaryReader reader)
+        {
+            if (reader.Endianness != Endianness.Big)
+                throw new ArgumentException("Provided binary reader is little endian.", nameof(reader));
+
+            return reader;
+        }
+
+        #endregion
+
         #region Strings with default UTF-8 encoding
 
         [NotNull]
         public static string ReadString([NotNull] this IBinaryReader reader)
         {
             return reader.ReadString(Encoding.UTF8);
+        }
+
+        [NotNull]
+        public static string ReadShortString([NotNull] this IBinaryReader reader)
+        {
+            var length = reader.ReadByte();
+
+            if (reader is BinaryBufferReader bufferReader)
+            {
+                var result = Encoding.UTF8.GetString(bufferReader.Buffer, (int)bufferReader.Position, length);
+
+                bufferReader.Position += length;
+
+                return result;
+            }
+
+            return Encoding.UTF8.GetString(reader.ReadByteArray(length));
         }
 
         #endregion
@@ -129,18 +158,18 @@ namespace Vostok.Commons.Binary
 
         public struct JumpToken : IDisposable
         {
+            public readonly long Position;
             private readonly IBinaryReader reader;
-            private readonly long position;
 
             public JumpToken(IBinaryReader reader, long position)
             {
                 this.reader = reader;
-                this.position = position;
+                Position = position;
             }
 
             public void Dispose()
             {
-                reader.Position = position;
+                reader.Position = Position;
             }
         }
 

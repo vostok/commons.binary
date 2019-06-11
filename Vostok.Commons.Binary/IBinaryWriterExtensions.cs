@@ -8,6 +8,18 @@ namespace Vostok.Commons.Binary
     [PublicAPI]
     internal static class IBinaryWriterExtensions
     {
+        #region Endianness
+
+        public static IBinaryWriter EnsureBigEndian(this IBinaryWriter writer)
+        {
+            if (writer.Endianness != Endianness.Big)
+                throw new ArgumentException("Provided binary writer is little endian.", nameof(writer));
+
+            return writer;
+        }
+
+        #endregion
+
         #region Strings with default UTF-8 encoding
 
         public static void WriteWithLength([NotNull] this IBinaryWriter writer, [NotNull] string value)

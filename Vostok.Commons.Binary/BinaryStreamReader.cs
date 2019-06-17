@@ -139,6 +139,17 @@ namespace Vostok.Commons.Binary
             return encoding.GetString(stringBuffer, 0, size);
         }
 
+        public string ReadShortString(Encoding encoding)
+        {
+            var size = ReadByte();
+
+            var stringBuffer = size > BufferSize ? new byte[size] : buffer.Buffer;
+
+            ReadFromStreamExactly(stringBuffer, 0, size);
+
+            return encoding.GetString(stringBuffer, 0, size);
+        }
+
         public byte[] ReadByteArray()
         {
             return ReadByteArray(ReadInt32());

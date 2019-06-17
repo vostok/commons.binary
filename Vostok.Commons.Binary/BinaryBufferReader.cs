@@ -13,7 +13,7 @@ namespace Vostok.Commons.Binary
     [PublicAPI]
     internal class BinaryBufferReader : IBinaryReader
     {
-        public BinaryBufferReader([NotNull] byte[] buffer, int position)
+        public BinaryBufferReader([NotNull] byte[] buffer, long position)
         {
             Buffer = buffer ?? throw new ArgumentNullException(nameof(buffer));
             Position = position;
@@ -256,6 +256,20 @@ namespace Vostok.Commons.Binary
         public string ReadString(Encoding encoding)
         {
             var size = ReadInt32();
+
+            EnsureSufficientSizeRemaining(size);
+
+            var result = encoding.GetString(Buffer, (int)Position, size);
+
+            Position += size;
+
+            return result;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public string ReadShortString(Encoding encoding)
+        {
+            var size = ReadByte();
 
             EnsureSufficientSizeRemaining(size);
 

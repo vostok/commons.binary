@@ -31,18 +31,7 @@ namespace Vostok.Commons.Binary
         [NotNull]
         public static string ReadShortString([NotNull] this IBinaryReader reader)
         {
-            var length = reader.ReadByte();
-
-            if (reader is BinaryBufferReader bufferReader)
-            {
-                var result = Encoding.UTF8.GetString(bufferReader.Buffer, (int)bufferReader.Position, length);
-
-                bufferReader.Position += length;
-
-                return result;
-            }
-
-            return Encoding.UTF8.GetString(reader.ReadByteArray(length));
+            return reader.ReadShortString(Encoding.UTF8);
         }
 
         #endregion

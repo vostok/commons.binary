@@ -253,7 +253,7 @@ namespace Vostok.Commons.Binary
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public string ReadString(Encoding encoding)
+        public virtual string ReadString(Encoding encoding)
         {
             var size = ReadInt32();
 
@@ -267,7 +267,7 @@ namespace Vostok.Commons.Binary
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public string ReadShortString(Encoding encoding)
+        public virtual string ReadShortString(Encoding encoding)
         {
             var size = ReadByte();
 

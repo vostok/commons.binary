@@ -81,27 +81,6 @@ namespace Vostok.Commons.Binary
         }
 
         [NotNull]
-        public static List<T> ReadListSafely<T>([NotNull] this IBinaryReader reader, [NotNull] Func<IBinaryReader, T> readSingleValue, Action<Exception> onError)
-        {
-            var count = reader.ReadInt32();
-            var result = new List<T>(count);
-
-            for (var i = 0; i < count; i++)
-            {
-                try
-                {
-                    result.Add(readSingleValue(reader));
-                }
-                catch (Exception e)
-                {
-                    onError(e);
-                }
-            }
-
-            return result;
-        }
-
-        [NotNull]
         public static HashSet<T> ReadSet<T>([NotNull] this IBinaryReader reader, [NotNull] Func<IBinaryReader, T> readSingleValue)
         {
             var count = reader.ReadInt32();

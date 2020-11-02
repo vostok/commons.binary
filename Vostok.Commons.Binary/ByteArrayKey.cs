@@ -22,33 +22,38 @@ namespace Vostok.Commons.Binary
             hashCode = CalculateHashCode(bytes, offset, length);
         }
 
+        public static bool Equals(byte[] first, byte[] second)
+            => Equals(first, 0, first.Length, second, 0, second.Length);
+
         public override bool Equals(object obj)
         {
             if (obj is ByteArrayKey other)
-                return Compare(this, other);
+                return Equals(this, other);
             return false;
         }
 
         public override int GetHashCode()
-        {
-            return hashCode;
-        }
+            => hashCode;
 
-        private static unsafe bool Compare(ByteArrayKey first, ByteArrayKey second)
+        private static bool Equals(ByteArrayKey first, ByteArrayKey second)
+            => Equals(first.bytes, first.offset, first.length, second.bytes, second.offset, second.length);
+
+        private static unsafe bool Equals(byte[] first, long firstOffset, long firstLength, byte[] second, long secondOffset, long secondLength)
         {
-            if (first.length != second.length)
+            if (firstLength != secondLength)
                 return false;
 
-            fixed (byte* p1 = first.bytes, p2 = second.bytes)
+            fixed (byte* p1 = first, p2 = second)
             {
                 byte* x1 = p1, x2 = p2;
-                x1 += first.offset;
-                x2 += second.offset;
+                x1 += firstOffset;
+                x2 += secondOffset;
 
-                var l = first.length;
+                var l = firstLength;
                 for (var i = 0; i < l / 8; i++, x1 += 8, x2 += 8)
                     if (*(long*)x1 != *(long*)x2)
                         return false;
+
                 if ((l & 4) != 0)
                 {
                     if (*(int*)x1 != *(int*)x2) return false;

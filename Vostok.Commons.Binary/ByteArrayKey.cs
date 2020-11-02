@@ -23,7 +23,15 @@ namespace Vostok.Commons.Binary
         }
 
         public static bool Equals(byte[] first, byte[] second)
-            => Equals(first, 0, first.Length, second, 0, second.Length);
+        {
+            if (ReferenceEquals(first, second))
+                return true;
+            
+            if (first == null || second == null)
+                return false;
+            
+            return Equals(first, 0, first.Length, second, 0, second.Length);
+        }
 
         public override bool Equals(object obj)
         {

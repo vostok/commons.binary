@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Vostok.Commons.Binary
 {
-    public static class Crc32Fast
+    [PublicAPI]
+    internal static class Crc32Fast
     {
         private const uint Polynome = 0xEDB88320U;
         private const uint InitialXor = 0xFFFFFFFFU;

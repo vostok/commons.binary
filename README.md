@@ -1,6 +1,6 @@
 # Vostok.Commons.Binary
 
-[![Build status](https://ci.appveyor.com/api/projects/status/github/vostok/commons.binary?svg=true&branch=master)](https://ci.appveyor.com/project/vostok/commons.binary/branch/master)
+[![Build & Test & Publish](https://github.com/vostok/commons.binary/actions/workflows/ci.yml/badge.svg)](https://github.com/vostok/commons.binary/actions/workflows/ci.yml)
 [![NuGet](https://img.shields.io/nuget/v/Vostok.Commons.Binary.svg)](https://www.nuget.org/packages/Vostok.Commons.Binary)
 
 An utility library containing helper classes for binary serialization and hashing.

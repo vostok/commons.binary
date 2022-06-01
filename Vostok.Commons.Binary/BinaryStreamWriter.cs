@@ -194,6 +194,19 @@ namespace Vostok.Commons.Binary
             stream.Write(value, offset, length);
         }
 
+#if NET6_0_OR_GREATER
+        public void WriteWithLength(ReadOnlySpan<byte> value)
+        {
+            Write(value.Length);
+            WriteWithoutLength(value);
+        }
+
+        public void WriteWithoutLength(ReadOnlySpan<byte> value)
+        {
+            stream.Write(value);
+        }
+#endif
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void Flush()
         {

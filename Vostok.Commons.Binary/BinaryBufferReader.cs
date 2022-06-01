@@ -306,5 +306,33 @@ namespace Vostok.Commons.Binary
             if (size > BytesRemaining)
                 throw new IndexOutOfRangeException($"Requested to read {size} bytes from buffer, but it only has {BytesRemaining} bytes remaining.");
         }
+
+#if NET6_0_OR_GREATER
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ReadOnlySpan<byte> ReadBytesSpan()
+        {
+            var size = ReadInt32();
+
+            EnsureSufficientSizeRemaining(size);
+
+            var result = new ReadOnlySpan<byte>(Buffer, (int)Position, size);
+
+            Position += size;
+
+            return result;
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ReadOnlySpan<byte> ReadBytesSpan(int size)
+        {
+            EnsureSufficientSizeRemaining(size);
+
+            var result = new ReadOnlySpan<byte>(Buffer, (int)Position, size);
+
+            Position += size;
+
+            return result;
+        }
+#endif
     }
 }

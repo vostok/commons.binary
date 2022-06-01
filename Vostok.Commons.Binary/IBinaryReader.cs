@@ -96,5 +96,20 @@ namespace Vostok.Commons.Binary
         /// </summary>
         [NotNull]
         byte[] ReadByteArray(int size);
+
+#if NET6_0_OR_GREATER
+        /// <summary>
+        /// <para>Reads a span of bytes.</para>
+        /// <para>Assumes that the value itself is prepended by its Int32 length.</para>
+        /// <para>The resulting ReadOnlySpan may hold a reference to the source buffer if it exists. Be careful not to use this span after buffer and this reader released. Underlying buffer may be returned to pool and used under another reader. Or you can keep a huge buffer while this span is alive too.</para>
+        /// </summary>
+        ReadOnlySpan<byte> ReadBytesSpan();
+
+        /// <summary>
+        /// <para>Reads a span of bytes of given <paramref name="size"/>.</para>
+        /// <para>The resulting ReadOnlySpan may hold a reference to the source buffer if it exists. Be careful not to hold this span forever to avoid holding the source buffer.</para>
+        /// </summary>
+        ReadOnlySpan<byte> ReadBytesSpan(int size);
+#endif
     }
 }

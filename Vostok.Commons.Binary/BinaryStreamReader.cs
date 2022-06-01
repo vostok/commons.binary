@@ -164,6 +164,18 @@ namespace Vostok.Commons.Binary
             return result;
         }
 
+#if NET6_0_OR_GREATER
+        public ReadOnlySpan<byte> ReadBytesSpan()
+        {
+            return ReadByteArray().AsSpan();
+        }
+
+        public ReadOnlySpan<byte> ReadBytesSpan(int size)
+        {
+            return ReadByteArray(size).AsSpan();
+        }
+#endif
+
         private void LoadIntoBufferExactly(int size)
         {
             ReadFromStreamExactly(buffer.Buffer, 0, size);

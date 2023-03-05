@@ -225,6 +225,18 @@ namespace Vostok.Commons.Binary.Tests
             Test(value, (item, writer) => writer.WriteWithoutLength(item), reader => reader.ReadByteArray(value.Length));
         }
 
+
+#if NET6_0_OR_GREATER
+        [TestCase((byte)0xFF)]
+        [TestCase((byte)0xFF, (byte)0xAB)]
+        [TestCase((byte)0xC0, (byte)0xFF, (byte)0xEE, (byte)0xBA, (byte)0xBE)]
+        public void Should_correctly_write_and_read_bytes_span_values(params byte[] value)
+        {
+            Test(value.AsSpan(), (item, writer) => writer.WriteWithLength(item), reader => reader.ReadBytesSpan());
+            Test(value.AsSpan(), (item, writer) => writer.WriteWithoutLength(item), reader => reader.ReadBytesSpan(value.Length));
+        }
+#endif
+
         [Test]
         public void Should_correctly_write_and_read_timespan_values()
         {
@@ -312,7 +324,7 @@ namespace Vostok.Commons.Binary.Tests
                 reader => reader.ReadNullable(r => r.ReadString()));
         }
 
-        #region Helpers 
+#region Helpers 
 
         private static void Test<T>(T item, Action<T, IBinaryWriter> write, Func<IBinaryReader, T> read)
         {
@@ -524,6 +536,6 @@ namespace Vostok.Commons.Binary.Tests
                 => throw new NotSupportedException();
         }
 
-        #endregion
+#endregion
     }
 }

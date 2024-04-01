@@ -271,6 +271,20 @@ namespace Vostok.Commons.Binary.Tests
             Test(set, (item, writer) => writer.WriteCollection(item, (w, e) => w.Write(e)), reader => reader.ReadSet(r => r.ReadInt32()));
         }
 
+        [Test]
+        public void Should_respect_equality_comparer_for_read_set()
+        {
+            var set = new HashSet<string>(new[] {"key1", "Key2"}, StringComparer.OrdinalIgnoreCase);
+            var writer = new BinaryBufferWriter(1);
+            writer.WriteCollection(set, (w, s) => w.WriteWithLength(s));
+
+            var reader = new BinaryBufferReader(writer.Buffer, 0L);
+            var readSet = reader.ReadSet(r => r.ReadString(), StringComparer.OrdinalIgnoreCase);
+            readSet.Contains("KEY1").Should().BeTrue();
+            readSet.Contains("Key2").Should().BeTrue();
+            readSet.Contains("key3").Should().BeFalse();
+        }
+
         [TestCase]
         [TestCase(1)]
         [TestCase(1, 2, 3)]
@@ -282,6 +296,24 @@ namespace Vostok.Commons.Binary.Tests
                 dictionary,
                 (item, writer) => writer.WriteDictionary(item, (w, e) => w.Write(e), (w, e) => w.Write(e)),
                 reader => reader.ReadDictionary(r => r.ReadInt32(), r => r.ReadInt32()));
+        }
+        
+        [Test]
+        public void Should_respect_equality_comparer_for_read_dictionary()
+        {
+            var dictionary = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["key1"] = 5,
+                ["Key2"] = 10,
+            };
+            var writer = new BinaryBufferWriter(1);
+            writer.WriteDictionary(dictionary, (w, k) => w.WriteWithLength(k), (w, v) => w.Write(v));
+
+            var reader = new BinaryBufferReader(writer.Buffer, 0L);
+            var readSet = reader.ReadDictionary(r => r.ReadString(), r => r.ReadInt32(), StringComparer.OrdinalIgnoreCase);
+            readSet.ContainsKey("KEY1").Should().BeTrue();
+            readSet.ContainsKey("Key2").Should().BeTrue();
+            readSet.ContainsKey("key3").Should().BeFalse();
         }
 
         [Test]

@@ -83,8 +83,17 @@ namespace Vostok.Commons.Binary
         [NotNull]
         public static HashSet<T> ReadSet<T>([NotNull] this IBinaryReader reader, [NotNull] Func<IBinaryReader, T> readSingleValue)
         {
+            return ReadSet(reader, readSingleValue, equalityComparer: null);
+        }
+
+        [NotNull]
+        public static HashSet<T> ReadSet<T>(
+            [NotNull] this IBinaryReader reader,
+            [NotNull] Func<IBinaryReader, T> readSingleValue,
+            [CanBeNull] IEqualityComparer<T> equalityComparer)
+        {
             var count = reader.ReadInt32();
-            var result = new HashSet<T>();
+            var result = new HashSet<T>(equalityComparer);
 
             for (var i = 0; i < count; i++)
             {
@@ -100,8 +109,18 @@ namespace Vostok.Commons.Binary
             [NotNull] Func<IBinaryReader, TKey> readSingleKey,
             [NotNull] Func<IBinaryReader, TValue> readSingleValue)
         {
+            return ReadDictionary(reader, readSingleKey, readSingleValue, equalityComparer: null);
+        }
+
+        [NotNull]
+        public static Dictionary<TKey, TValue> ReadDictionary<TKey, TValue>(
+            [NotNull] this IBinaryReader reader,
+            [NotNull] Func<IBinaryReader, TKey> readSingleKey,
+            [NotNull] Func<IBinaryReader, TValue> readSingleValue,
+            [CanBeNull] IEqualityComparer<TKey> equalityComparer)
+        {
             var count = reader.ReadInt32();
-            var result = new Dictionary<TKey, TValue>(count);
+            var result = new Dictionary<TKey, TValue>(count, equalityComparer);
 
             for (var i = 0; i < count; i++)
             {

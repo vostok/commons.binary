@@ -1,3 +1,7 @@
+## 0.1.4 (03-04-2024):
+
+Add equalityComparer to IBinaryReaderExtensions.ReadSet and IBinaryReaderExtensions.ReadDictionary
+
 ## 0.1.2 (06-12-2021):
 
 Added `net6.0` target.

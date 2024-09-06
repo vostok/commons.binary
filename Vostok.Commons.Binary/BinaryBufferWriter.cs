@@ -347,6 +347,36 @@ namespace Vostok.Commons.Binary
             IncreaseLengthIfNeeded();
         }
 
+#if NET6_0_OR_GREATER
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void WriteWithLength(ReadOnlySpan<byte> value)
+        {
+            var length = value.Length;
+            EnsureCapacity(length + sizeof(int));
+
+            Write(length);
+
+            value.CopyTo(new Span<byte>(Buffer, position, length));
+
+            position += length;
+
+            IncreaseLengthIfNeeded();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void WriteWithoutLength(ReadOnlySpan<byte> value)
+        {
+            var length = value.Length;
+            EnsureCapacity(length);
+
+            value.CopyTo(new Span<byte>(Buffer, position, length));
+
+            position += length;
+
+            IncreaseLengthIfNeeded();
+        }
+#endif
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset(int neededCapacity = 0)
         {

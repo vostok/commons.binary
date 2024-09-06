@@ -105,5 +105,19 @@ namespace Vostok.Commons.Binary
         /// <para>The value itself is not automatically prepended with length (readers of binary result must know the length from external sources).</para>
         /// </summary>
         void WriteWithoutLength([NotNull] byte[] value, int offset, int length);
+
+#if NET6_0_OR_GREATER
+        /// <summary>
+        /// <para>Writes given span of bytes as bytes array in its entirety.</para>
+        /// <para>The value itself is automatically prepended with Int32 length (see <see cref="Write(int)"/>).</para>
+        /// </summary>
+        void WriteWithLength(ReadOnlySpan<byte> value);
+
+        /// <summary>
+        /// <para>Writes given span of bytes as bytes array in its entirety.</para>
+        /// <para>The value itself is not automatically prepended with length (readers of binary result must know the length from external sources).</para>
+        /// </summary>
+        void WriteWithoutLength(ReadOnlySpan<byte> value);
+#endif
     }
 }

@@ -1,3 +1,7 @@
+## 0.1.5 (09-12-2024): 
+
+Bump NuGet deps versions
+
 ## 0.1.4 (03-04-2024):
 
 Add equalityComparer to IBinaryReaderExtensions.ReadSet and IBinaryReaderExtensions.ReadDictionary

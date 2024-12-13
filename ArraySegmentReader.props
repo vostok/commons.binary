@@ -1,0 +1,20 @@
+<Project>
+
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="$(MSBuildThisFileDirectory)\Vostok.Commons.Binary\Endianness.cs" Link="Commons\Endianness.cs" />
+    <Compile Remove="$(MSBuildThisFileDirectory)\Vostok.Commons.Binary\EndiannessConverter.cs" Link="Commons\EndiannessConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)\Vostok.Commons.Binary\Endianness.cs" Link="Commons\Endianness.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)\Vostok.Commons.Binary\EndiannessConverter.cs" Link="Commons\EndiannessConverter.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)\Vostok.Commons.Binary\IBinaryReader.cs" Link="Commons\IBinaryReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)\Vostok.Commons.Binary\IBinaryReaderExtensions.cs" Link="Commons\IBinaryReaderExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)\Vostok.Commons.Binary\ArraySegmentReader.cs" Link="Commons\ArraySegmentReader.cs" />
+  </ItemGroup>
+
+</Project>

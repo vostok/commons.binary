@@ -36,6 +36,11 @@ namespace Vostok.Commons.Binary
             }
         }
 
+        public long ArrayPosition
+        {
+            get => Segment.Offset + position;
+        }
+
         public long BytesRemaining => Segment.Count - position;
 
         public Endianness Endianness { get; set; } = EndiannessConverter.SystemEndianness;
@@ -47,7 +52,7 @@ namespace Vostok.Commons.Binary
 
             EnsureSufficientSizeRemaining(ValueSize);
 
-            var result = Segment.Array![Segment.Offset + position];
+            var result = Segment.Array![ArrayPosition];
 
             position += ValueSize;
 
@@ -61,7 +66,7 @@ namespace Vostok.Commons.Binary
 
             EnsureSufficientSizeRemaining(ValueSize);
 
-            var result = Segment.Array![Segment.Offset + position] != 0;
+            var result = Segment.Array![ArrayPosition] != 0;
 
             position += ValueSize;
 
@@ -77,7 +82,7 @@ namespace Vostok.Commons.Binary
 
             short result;
 
-            fixed (byte* ptr = &Segment.Array![Segment.Offset + position])
+            fixed (byte* ptr = &Segment.Array![ArrayPosition])
                 result = *(short*)ptr;
 
             position += ValueSize;
@@ -94,7 +99,7 @@ namespace Vostok.Commons.Binary
 
             int result;
 
-            fixed (byte* ptr = &Segment.Array![Segment.Offset + position])
+            fixed (byte* ptr = &Segment.Array![ArrayPosition])
                 result = *(int*)ptr;
 
             position += ValueSize;
@@ -111,7 +116,7 @@ namespace Vostok.Commons.Binary
 
             long result;
 
-            fixed (byte* ptr = &Segment.Array![Segment.Offset + position])
+            fixed (byte* ptr = &Segment.Array![ArrayPosition])
                 result = *(long*)ptr;
 
             position += ValueSize;
@@ -128,7 +133,7 @@ namespace Vostok.Commons.Binary
 
             ushort result;
 
-            fixed (byte* ptr = &Segment.Array![Segment.Offset + position])
+            fixed (byte* ptr = &Segment.Array![ArrayPosition])
                 result = *(ushort*)ptr;
 
             position += ValueSize;
@@ -145,7 +150,7 @@ namespace Vostok.Commons.Binary
 
             uint result;
 
-            fixed (byte* ptr = &Segment.Array![Segment.Offset + position])
+            fixed (byte* ptr = &Segment.Array![ArrayPosition])
                 result = *(uint*)ptr;
 
             position += ValueSize;
@@ -162,7 +167,7 @@ namespace Vostok.Commons.Binary
 
             ulong result;
 
-            fixed (byte* ptr = &Segment.Array![Segment.Offset + position])
+            fixed (byte* ptr = &Segment.Array![ArrayPosition])
                 result = *(ulong*)ptr;
 
             position += ValueSize;
@@ -179,7 +184,7 @@ namespace Vostok.Commons.Binary
 
             float result;
 
-            fixed (byte* ptr = &Segment.Array![Segment.Offset + position])
+            fixed (byte* ptr = &Segment.Array![ArrayPosition])
                 result = *(float*)ptr;
 
             position += ValueSize;
@@ -196,7 +201,7 @@ namespace Vostok.Commons.Binary
 
             double result;
 
-            fixed (byte* ptr = &Segment.Array![Segment.Offset + position])
+            fixed (byte* ptr = &Segment.Array![ArrayPosition])
                 result = *(double*)ptr;
 
             position += ValueSize;
@@ -213,7 +218,7 @@ namespace Vostok.Commons.Binary
 
             Guid result;
 
-            fixed (byte* ptr = &Segment.Array![Segment.Offset + position])
+            fixed (byte* ptr = &Segment.Array![ArrayPosition])
                 result = *(Guid*)ptr;
 
             position += ValueSize;
@@ -233,7 +238,7 @@ namespace Vostok.Commons.Binary
             {
                 EnsureSufficientSizeRemaining(size + 1);
 
-                var currentByte = Segment.Array![Segment.Offset + position + size];
+                var currentByte = Segment.Array![ArrayPosition + size];
 
                 if (size == sizeof(uint))
                 {
@@ -265,7 +270,7 @@ namespace Vostok.Commons.Binary
             {
                 EnsureSufficientSizeRemaining(size + 1);
 
-                var currentByte = Segment.Array![Segment.Offset + position + size];
+                var currentByte = Segment.Array![ArrayPosition + size];
 
                 if (size == sizeof(ulong))
                 {
@@ -292,7 +297,7 @@ namespace Vostok.Commons.Binary
 
             EnsureSufficientSizeRemaining(size);
 
-            var result = encoding.GetString(Segment.Array!, Segment.Offset + position, size);
+            var result = encoding.GetString(Segment.Array!, (int)ArrayPosition, size);
 
             position += size;
 
@@ -306,7 +311,7 @@ namespace Vostok.Commons.Binary
 
             EnsureSufficientSizeRemaining(size);
 
-            var result = encoding.GetString(Segment.Array!, Segment.Offset + position, size);
+            var result = encoding.GetString(Segment.Array!, (int)ArrayPosition, size);
 
             position += size;
 
@@ -326,7 +331,7 @@ namespace Vostok.Commons.Binary
 
             var result = new byte[size];
 
-            Buffer.BlockCopy(Segment.Array!, Segment.Offset + position, result, 0, size);
+            Buffer.BlockCopy(Segment.Array!, (int)ArrayPosition, result, 0, size);
 
             position += size;
 

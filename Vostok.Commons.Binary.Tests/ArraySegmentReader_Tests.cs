@@ -10,12 +10,14 @@ namespace Vostok.Commons.Binary.Tests
         [Test]
         public void Test_bound_check()
         {
-            var segmentReader = new ArraySegmentReader(new ArraySegment<byte>(new byte[42], 14, 4));
+            const int offset = 14;
+            var segmentReader = new ArraySegmentReader(new ArraySegment<byte>(new byte[42], offset, 4));
             segmentReader.Position.Should().Be(0);
             segmentReader.BytesRemaining.Should().Be(sizeof(int));
             segmentReader.ReadInt32().Should().Be(0);
             segmentReader.Position.Should().Be(sizeof(int));
             segmentReader.BytesRemaining.Should().Be(0);
+            segmentReader.ArrayPosition.Should().Be(sizeof(int) + offset);
 
             new Action(() => segmentReader.ReadBool()).Should().Throw<IndexOutOfRangeException>();
             new Action(() => segmentReader.ReadByte()).Should().Throw<IndexOutOfRangeException>();

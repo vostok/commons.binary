@@ -28,8 +28,7 @@ notests *default:
 
 full-build > notests:
   deps:
-    - -vostok.devtools
-    - vostok.devtools@with-net6.0
+    - vostok.devtools
 
   install:
     - Vostok.Commons.Binary/bin/Release/netstandard2.0/Vostok.Commons.Binary.dll

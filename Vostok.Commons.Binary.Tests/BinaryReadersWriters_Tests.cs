@@ -348,25 +348,35 @@ namespace Vostok.Commons.Binary.Tests
 
         private static void Test<T>(T item, Action<T, IBinaryWriter> write, Func<IBinaryReader, T> read)
         {
-            TestBufferWithBuffer(item, write, read, Endianness.Little, true);
-            TestBufferWithBuffer(item, write, read, Endianness.Little, false);
-            TestBufferWithBuffer(item, write, read, Endianness.Big, true);
-            TestBufferWithBuffer(item, write, read, Endianness.Big, false);
+            TestBufferWithBuffer(item, write, read, Endianness.Little, true, false);
+            TestBufferWithBuffer(item, write, read, Endianness.Little, false, false);
+            TestBufferWithBuffer(item, write, read, Endianness.Big, true, false);
+            TestBufferWithBuffer(item, write, read, Endianness.Big, false, false);
 
-            TestBufferWithStream(item, write, read, Endianness.Little, true);
-            TestBufferWithStream(item, write, read, Endianness.Little, false);
-            TestBufferWithStream(item, write, read, Endianness.Big, true);
-            TestBufferWithStream(item, write, read, Endianness.Big, false);
+            TestBufferWithStream(item, write, read, Endianness.Little, true, false);
+            TestBufferWithStream(item, write, read, Endianness.Little, false, false);
+            TestBufferWithStream(item, write, read, Endianness.Big, true, false);
+            TestBufferWithStream(item, write, read, Endianness.Big, false, false);
+            
+            TestBufferWithArraySegment(item, write, read, Endianness.Little, true, true);
+            TestBufferWithArraySegment(item, write, read, Endianness.Little, false, true);
+            TestBufferWithArraySegment(item, write, read, Endianness.Big, true, true);
+            TestBufferWithArraySegment(item, write, read, Endianness.Big, false, true);
 
-            TestStreamWithStream(item, write, read, Endianness.Little, true);
-            TestStreamWithStream(item, write, read, Endianness.Little, false);
-            TestStreamWithStream(item, write, read, Endianness.Big, true);
-            TestStreamWithStream(item, write, read, Endianness.Big, false);
+            TestStreamWithStream(item, write, read, Endianness.Little, true, false);
+            TestStreamWithStream(item, write, read, Endianness.Little, false, false);
+            TestStreamWithStream(item, write, read, Endianness.Big, true, false);
+            TestStreamWithStream(item, write, read, Endianness.Big, false, false);
 
-            TestStreamWithBuffer(item, write, read, Endianness.Little, true);
-            TestStreamWithBuffer(item, write, read, Endianness.Little, false);
-            TestStreamWithBuffer(item, write, read, Endianness.Big, true);
-            TestStreamWithBuffer(item, write, read, Endianness.Big, false);
+            TestStreamWithBuffer(item, write, read, Endianness.Little, true, false);
+            TestStreamWithBuffer(item, write, read, Endianness.Little, false, false);
+            TestStreamWithBuffer(item, write, read, Endianness.Big, true, false);
+            TestStreamWithBuffer(item, write, read, Endianness.Big, false, false);
+
+            TestStreamWithArraySegment(item, write, read, Endianness.Little, true, true);
+            TestStreamWithArraySegment(item, write, read, Endianness.Little, false, true);
+            TestStreamWithArraySegment(item, write, read, Endianness.Big, true, true);
+            TestStreamWithArraySegment(item, write, read, Endianness.Big, false, true);
         }
 
         private static void TestBufferWithBuffer<T>(
@@ -374,9 +384,21 @@ namespace Vostok.Commons.Binary.Tests
             Action<T, IBinaryWriter> write,
             Func<IBinaryReader, T> read,
             Endianness endianness,
-            bool useGarbage)
+            bool useGarbage,
+            bool readerHasOwnPosition)
         {
-            TestBufferWith(item, write, read, endianness, useGarbage, CreateBufferReader);
+            TestBufferWith(item, write, read, endianness, useGarbage, readerHasOwnPosition, CreateBufferReader);
+        }
+
+        private static void TestBufferWithArraySegment<T>(
+            T item,
+            Action<T, IBinaryWriter> write,
+            Func<IBinaryReader, T> read,
+            Endianness endianness,
+            bool useGarbage,
+            bool readerHasOwnPosition)
+        {
+            TestBufferWith(item, write, read, endianness, useGarbage, readerHasOwnPosition, CreateArraySegmentReader);
         }
 
         private static void TestBufferWithStream<T>(
@@ -384,9 +406,10 @@ namespace Vostok.Commons.Binary.Tests
             Action<T, IBinaryWriter> write,
             Func<IBinaryReader, T> read,
             Endianness endianness,
-            bool useGarbage)
+            bool useGarbage,
+            bool readerHasOwnPosition)
         {
-            TestBufferWith(item, write, read, endianness, useGarbage, CreateStreamReader);
+            TestBufferWith(item, write, read, endianness, useGarbage, readerHasOwnPosition, CreateStreamReader);
         }
 
         private static void TestStreamWithStream<T>(
@@ -394,9 +417,10 @@ namespace Vostok.Commons.Binary.Tests
             Action<T, IBinaryWriter> write,
             Func<IBinaryReader, T> read,
             Endianness endianness,
-            bool useGarbage)
+            bool useGarbage,
+            bool readerHasOwnPosition)
         {
-            TestStreamWith(item, write, read, endianness, useGarbage, CreateStreamReader);
+            TestStreamWith(item, write, read, endianness, useGarbage, readerHasOwnPosition, CreateStreamReader);
         }
 
         private static void TestStreamWithBuffer<T>(
@@ -404,9 +428,21 @@ namespace Vostok.Commons.Binary.Tests
             Action<T, IBinaryWriter> write,
             Func<IBinaryReader, T> read,
             Endianness endianness,
-            bool useGarbage)
+            bool useGarbage,
+            bool readerHasOwnPosition)
         {
-            TestStreamWith(item, write, read, endianness, useGarbage, CreateBufferReader);
+            TestStreamWith(item, write, read, endianness, useGarbage, readerHasOwnPosition, CreateBufferReader);
+        }
+
+        private static void TestStreamWithArraySegment<T>(
+            T item,
+            Action<T, IBinaryWriter> write,
+            Func<IBinaryReader, T> read,
+            Endianness endianness,
+            bool useGarbage,
+            bool readerHasOwnPosition)
+        {
+            TestStreamWith(item, write, read, endianness, useGarbage, readerHasOwnPosition, CreateArraySegmentReader);
         }
 
         private static void TestBufferWith<T>(
@@ -415,7 +451,8 @@ namespace Vostok.Commons.Binary.Tests
             Func<IBinaryReader, T> read,
             Endianness endianness,
             bool useGarbage,
-            Func<byte[], int, Endianness, IBinaryReader> createReader)
+            bool readerHasOwnPosition,
+            Func<byte[], int, int, Endianness, IBinaryReader> createReader)
         {
             var writer = new BinaryBufferWriter(1)
             {
@@ -440,13 +477,16 @@ namespace Vostok.Commons.Binary.Tests
 
             writer.Position.Should().Be(writer.Length);
 
-            var reader = createReader(writer.Buffer, lengthBefore, endianness);
+            var reader = createReader(writer.Buffer, lengthBefore, itemLength, endianness);
 
+            var positionBefore = reader.Position;
+            
             var restoredItem = read(reader);
-
+            
             Compare(item, restoredItem);
-
-            reader.Position.Should().Be(lengthAfter);
+            (reader.Position - positionBefore).Should().Be(itemLength);
+            if (!readerHasOwnPosition)
+                reader.Position.Should().Be(lengthAfter);
         }
 
         private static void TestStreamWith<T>(
@@ -455,7 +495,8 @@ namespace Vostok.Commons.Binary.Tests
             Func<IBinaryReader, T> read,
             Endianness endianness,
             bool useGarbage,
-            Func<byte[], int, Endianness, IBinaryReader> createReader)
+            bool readerHasOwnPosition,
+            Func<byte[], int, int, Endianness, IBinaryReader> createReader)
         {
             var stream = new MemoryStream(1);
 
@@ -482,13 +523,16 @@ namespace Vostok.Commons.Binary.Tests
 
             writer.Position.Should().Be(stream.Position);
 
-            var reader = createReader(stream.ToArray(), (int)positionBefore, endianness);
+            var reader = createReader(stream.ToArray(), (int)positionBefore, (int)itemLength, endianness);
 
+            var readerPositionBefore = reader.Position;
             var restoredItem = read(reader);
 
             Compare(item, restoredItem);
 
-            reader.Position.Should().Be(positionAfter);
+            (reader.Position - readerPositionBefore).Should().Be(itemLength);
+            if (!readerHasOwnPosition)
+                reader.Position.Should().Be(positionAfter);
         }
 
         private static void Compare<T>(T original, T restored)
@@ -503,12 +547,17 @@ namespace Vostok.Commons.Binary.Tests
             }
         }
 
-        private static BinaryBufferReader CreateBufferReader(byte[] buffer, int offset, Endianness endianness)
+        private static BinaryBufferReader CreateBufferReader(byte[] buffer, int offset, int count, Endianness endianness)
         {
             return new BinaryBufferReader(buffer, offset) {Endianness = endianness};
         }
 
-        private static BinaryStreamReader CreateStreamReader(byte[] buffer, int offset, Endianness endianness)
+        private static ArraySegmentReader CreateArraySegmentReader(byte[] buffer, int offset, int count, Endianness endianness)
+        {
+            return new ArraySegmentReader(new ArraySegment<byte>(buffer, offset, count)) {Endianness = endianness};
+        }
+
+        private static BinaryStreamReader CreateStreamReader(byte[] buffer, int offset, int count, Endianness endianness)
         {
             var memoryStream = new MemoryStream(buffer) {Position = offset};
 

@@ -20,7 +20,7 @@ namespace Vostok.Commons.Binary.Tests
 
             var convertedBack = EndiannessConverter.Swap(converted);
 
-            var convertedWithBitConverter = BitConverter.ToInt16(BitConverter.GetBytes(value).Reverse().ToArray(), 0);
+            var convertedWithBitConverter = BitConverter.ToInt16(BitConverter.GetBytes(value).AsEnumerable().Reverse().ToArray(), 0);
 
             converted.Should().Be(convertedWithBitConverter);
 
@@ -35,7 +35,7 @@ namespace Vostok.Commons.Binary.Tests
 
             var convertedBack = EndiannessConverter.Swap(converted);
 
-            var convertedWithBitConverter = BitConverter.ToUInt16(BitConverter.GetBytes(value).Reverse().ToArray(), 0);
+            var convertedWithBitConverter = BitConverter.ToUInt16(BitConverter.GetBytes(value).AsEnumerable().Reverse().ToArray(), 0);
 
             converted.Should().Be(convertedWithBitConverter);
 
@@ -51,7 +51,7 @@ namespace Vostok.Commons.Binary.Tests
 
             var convertedBack = EndiannessConverter.Swap(converted);
 
-            var convertedWithBitConverter = BitConverter.ToInt32(BitConverter.GetBytes(value).Reverse().ToArray(), 0);
+            var convertedWithBitConverter = BitConverter.ToInt32(BitConverter.GetBytes(value).AsEnumerable().Reverse().ToArray(), 0);
 
             converted.Should().Be(convertedWithBitConverter);
 
@@ -66,7 +66,7 @@ namespace Vostok.Commons.Binary.Tests
 
             var convertedBack = EndiannessConverter.Swap(converted);
 
-            var convertedWithBitConverter = BitConverter.ToUInt32(BitConverter.GetBytes(value).Reverse().ToArray(), 0);
+            var convertedWithBitConverter = BitConverter.ToUInt32(BitConverter.GetBytes(value).AsEnumerable().Reverse().ToArray(), 0);
 
             converted.Should().Be(convertedWithBitConverter);
 
@@ -82,7 +82,7 @@ namespace Vostok.Commons.Binary.Tests
 
             var convertedBack = EndiannessConverter.Swap(converted);
 
-            var convertedWithBitConverter = BitConverter.ToInt64(BitConverter.GetBytes(value).Reverse().ToArray(), 0);
+            var convertedWithBitConverter = BitConverter.ToInt64(BitConverter.GetBytes(value).AsEnumerable().Reverse().ToArray(), 0);
 
             converted.Should().Be(convertedWithBitConverter);
 
@@ -97,7 +97,7 @@ namespace Vostok.Commons.Binary.Tests
 
             var convertedBack = EndiannessConverter.Swap(converted);
 
-            var convertedWithBitConverter = BitConverter.ToUInt64(BitConverter.GetBytes(value).Reverse().ToArray(), 0);
+            var convertedWithBitConverter = BitConverter.ToUInt64(BitConverter.GetBytes(value).AsEnumerable().Reverse().ToArray(), 0);
 
             converted.Should().Be(convertedWithBitConverter);
 
@@ -119,7 +119,7 @@ namespace Vostok.Commons.Binary.Tests
 
             var convertedBack = EndiannessConverter.Swap(converted);
 
-            var convertedWithBitConverter = BitConverter.ToSingle(BitConverter.GetBytes(value).Reverse().ToArray(), 0);
+            var convertedWithBitConverter = BitConverter.ToSingle(BitConverter.GetBytes(value).AsEnumerable().Reverse().ToArray(), 0);
 
             converted.Should().Be(convertedWithBitConverter);
 
@@ -141,7 +141,7 @@ namespace Vostok.Commons.Binary.Tests
 
             var convertedBack = EndiannessConverter.Swap(converted);
 
-            var convertedWithBitConverter = BitConverter.ToDouble(BitConverter.GetBytes(value).Reverse().ToArray(), 0);
+            var convertedWithBitConverter = BitConverter.ToDouble(BitConverter.GetBytes(value).AsEnumerable().Reverse().ToArray(), 0);
 
             converted.Should().Be(convertedWithBitConverter);
 

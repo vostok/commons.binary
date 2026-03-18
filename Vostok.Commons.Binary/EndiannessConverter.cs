@@ -17,31 +17,31 @@ namespace Vostok.Commons.Binary
         public static ushort Convert(ushort value, Endianness to)
             => to == SystemEndianness ? value : Swap(value);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Convert(int value, Endianness to)
             => to == SystemEndianness ? value : Swap(value);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint Convert(uint value, Endianness to)
             => to == SystemEndianness ? value : Swap(value);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long Convert(long value, Endianness to)
             => to == SystemEndianness ? value : Swap(value);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ulong Convert(ulong value, Endianness to)
             => to == SystemEndianness ? value : Swap(value);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Convert(float value, Endianness to)
             => to == SystemEndianness ? value : Swap(value);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Convert(double value, Endianness to)
             => to == SystemEndianness ? value : Swap(value);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Guid Convert(Guid value, Endianness to)
             => to == SystemEndianness ? value : Swap(value);
 
@@ -65,7 +65,7 @@ namespace Vostok.Commons.Binary
             return returnValue;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static unsafe int Swap(int value)
         {
             var returnValue = int.MinValue;
@@ -75,7 +75,7 @@ namespace Vostok.Commons.Binary
             return returnValue;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static unsafe uint Swap(uint value)
         {
             var returnValue = uint.MinValue;
@@ -85,7 +85,7 @@ namespace Vostok.Commons.Binary
             return returnValue;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static unsafe long Swap(long value)
         {
             var returnValue = long.MinValue;
@@ -95,7 +95,7 @@ namespace Vostok.Commons.Binary
             return returnValue;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static unsafe ulong Swap(ulong value)
         {
             var returnValue = ulong.MinValue;
@@ -105,7 +105,7 @@ namespace Vostok.Commons.Binary
             return returnValue;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static unsafe float Swap(float value)
         {
             var returnValue = float.MinValue;
@@ -115,7 +115,7 @@ namespace Vostok.Commons.Binary
             return returnValue;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static unsafe double Swap(double value)
         {
             var returnValue = double.MinValue;
@@ -125,7 +125,7 @@ namespace Vostok.Commons.Binary
             return returnValue;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static unsafe Guid Swap(Guid value)
         {
             var returnValue = value;

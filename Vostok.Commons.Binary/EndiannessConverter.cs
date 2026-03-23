@@ -9,11 +9,11 @@ namespace Vostok.Commons.Binary
     {
         public static readonly Endianness SystemEndianness = BitConverter.IsLittleEndian ? Endianness.Little : Endianness.Big;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
         public static short Convert(short value, Endianness to)
             => to == SystemEndianness ? value : Swap(value);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
         public static ushort Convert(ushort value, Endianness to)
             => to == SystemEndianness ? value : Swap(value);
 
@@ -45,7 +45,7 @@ namespace Vostok.Commons.Binary
         public static Guid Convert(Guid value, Endianness to)
             => to == SystemEndianness ? value : Swap(value);
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
         public static unsafe short Swap(short value)
         {
             var returnValue = short.MinValue;
@@ -55,7 +55,7 @@ namespace Vostok.Commons.Binary
             return returnValue;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
         public static unsafe ushort Swap(ushort value)
         {
             var returnValue = ushort.MinValue;
@@ -137,14 +137,14 @@ namespace Vostok.Commons.Binary
             return returnValue;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
         private static unsafe void Swap2(byte* originalBytes, byte* returnBytes)
         {
             returnBytes[0] = originalBytes[1];
             returnBytes[1] = originalBytes[0];
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
         private static unsafe void Swap4(byte* originalBytes, byte* returnBytes)
         {
             returnBytes[0] = originalBytes[3];
@@ -153,7 +153,7 @@ namespace Vostok.Commons.Binary
             returnBytes[3] = originalBytes[0];
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining | MethodImplOptions.NoOptimization)]
         private static unsafe void Swap8(byte* originalBytes, byte* returnBytes)
         {
             returnBytes[0] = originalBytes[7];

@@ -1,3 +1,7 @@
+## 0.1.7 (23-03-2026):
+
+Fix .NET 10 runtime bug (see https://yt.skbkontur.ru/issue/CSh_Tel-233 or https://github.com/dotnet/runtime/issues/125301)
+
 ## 0.1.5 (09-12-2024): 
 
 Bump NuGet deps versions
